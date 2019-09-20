@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/calendar', 'CalendarController@index')->name('calendar');
 
 Route::prefix('admin')->group(function(){
-    Route::resource('booking', 'BookingController');
-    Route::resource('room', 'RoomController');
-    Route::resource('customer', 'CustomerController');
+    Route::resource('booking', 'Admin\BookingController');
+    Route::resource('room', 'Admin\RoomController');
+    Route::resource('customer', 'Admin\CustomerController');
 });
