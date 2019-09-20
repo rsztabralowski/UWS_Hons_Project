@@ -18,10 +18,6 @@ class CreateBookingsTable extends Migration
             $table->datetime('time_from')->nullable();
             $table->datetime('time_to')->nullable();
             $table->text('more_info')->nullable();
-            $table->integer('customer_id')->unsigned()->nullable();
-            $table->foreign('customer_id')->refrences('id')->on('customers')->onDelete('cascade');
-            $table->integer('room_id')->unsigned()->nullable();
-            $table->foreign('room_id')->refrences('id')->on('rooms')->onDelete('cascade');
             $table->timestamps();
         });
     }
