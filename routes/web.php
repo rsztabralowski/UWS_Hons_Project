@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/calendar', 'CalendarController@index')->name('calendar');
 
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->middleware('admin')->group(function(){
     Route::resource('booking', 'Admin\BookingController');
     Route::resource('room', 'Admin\RoomController');
     Route::resource('customer', 'Admin\CustomerController');
