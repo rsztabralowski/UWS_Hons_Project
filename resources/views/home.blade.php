@@ -36,7 +36,7 @@
                 <div class="panel-heading">Dashboard</div>
                 <?php if(auth()->user()->isAdmin == 1){?>
                     <div class="panel-body">
-                        <a href="{{url('admin/booking')}}">Admin</a>
+                        <a href="{{url('admin/panel')}}">Admin</a>
                     </div>
                 <?php } else echo '<div class="panel-heading">Normal User</div>';?>
             </div>
