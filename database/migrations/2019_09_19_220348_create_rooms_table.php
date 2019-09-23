@@ -17,7 +17,7 @@ class CreateRoomsTable extends Migration
             $table->increments('id');
             $table->string('room_number');
             $table->float('price', 8, 2);
-            $table->text('decsciption')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
