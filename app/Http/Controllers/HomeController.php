@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Booking;
+use App\Payment;
 
 class HomeController extends Controller
 {
@@ -28,6 +30,8 @@ class HomeController extends Controller
 
     public function admin()
     { 
-       return view('admin.panel'); 
+        $bookings = Booking::with('customer', 'room', 'payment')->get();
+        return view('admin.panel')->with('bookings', $bookings); 
+
     }
 }
