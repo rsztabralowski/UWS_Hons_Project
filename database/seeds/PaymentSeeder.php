@@ -22,8 +22,6 @@ class PaymentSeeder extends Seeder
                 'amount' => $faker->randomFloat(2,30,1000), 
                 'created_at' => date('Y-m-d H:i:s'),
                 'paypaltoken' => Str::random(16),
-                'booking_id' => $faker->numberBetween(1,10),
-                'customer_id' => $faker->numberBetween(1,10)
             ];
         }
 

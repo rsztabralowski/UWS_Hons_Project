@@ -18,6 +18,8 @@ class AddRelationshipsToBookingsTable extends Migration
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->integer('room_id')->unsigned()->nullable();
             $table->foreign('room_id')->references('id')->on('rooms');
+            $table->integer('payment_id')->unsigned()->nullable();
+            $table->foreign('payment_id')->references('id')->on('payments');
         });
     }
 
