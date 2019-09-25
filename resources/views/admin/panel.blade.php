@@ -14,7 +14,8 @@
                     @php
                         $total += $booking->payment['amount'];
                     @endphp
-                        <a href="{{ url ('/admin/booking/' .$booking->customer['id']. '/edit')}}">
+                        <a href="{{ url ('/admin/booking/' .$booking['id']. '/edit')}}">
+                        {{$booking->customer['id']}}<br>
                         {{$booking->customer['first_name']. ' ' . $booking->customer['last_name']}}<br>
                         {{$booking->customer['address']}}<br>
                         {{$booking->customer['email']}}<br>

@@ -19,8 +19,10 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::all();
-        return view('calendar')->with('bookings', $bookings);
+        
+        $bookings = Booking::with('customer', 'room', 'payment')->get();
+        return view('admin.panel')->with('bookings', $bookings); 
+
     }
 
     /**
@@ -63,7 +65,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        return view('admin.bookings.edit')->with('booking', $booking);
     }
 
     /**

@@ -30,8 +30,7 @@ class HomeController extends Controller
 
     public function admin()
     { 
-        $bookings = Booking::with('customer', 'room', 'payment')->get();
-        return view('admin.panel')->with('bookings', $bookings); 
+       //
 
     }
 }
