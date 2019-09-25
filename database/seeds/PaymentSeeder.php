@@ -14,9 +14,10 @@ class PaymentSeeder extends Seeder
     public function run()
     {
         $inserts = array();
+        $seedsCount = config('seedsCount.set_count');
       
         $faker = Faker::create();
-    	foreach (range(1,10) as $i) {
+    	foreach (range(1, $seedsCount) as $i) {
             $inserts[] = [
                 'id' => $i,
                 'amount' => $faker->randomFloat(2,30,1000), 

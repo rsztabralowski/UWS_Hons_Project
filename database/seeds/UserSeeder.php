@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
     {
 
         $inserts = array();
+        $seedsCount = config('seedsCount.set_count');
 
         $inserts[] = [
             'id' => 1,
@@ -26,7 +27,7 @@ class UserSeeder extends Seeder
         ];
 
         $faker = Faker::create();
-    	foreach (range(2,10) as $i) {
+    	foreach (range(2, $seedsCount) as $i) {
 	       $inserts[] = [
                     'id' => $i,
                     'name' => $faker->name,

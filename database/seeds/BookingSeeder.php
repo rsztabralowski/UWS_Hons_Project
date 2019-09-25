@@ -13,20 +13,21 @@ class BookingSeeder extends Seeder
      */
     public function run()
     {
+        $seedsCount = config('seedsCount.set_count');
         $date = date('Y-m-d H:i:s');
         $date_add_days = date('Y-m-d H:i:s', strtotime('+3 days', strtotime($date)));
 
         $faker = Faker::create();
-    	foreach (range(1,10) as $i) {
+    	foreach (range(1, $seedsCount) as $i) {
             $inserts[] = [
                 'id' => $i,
                 'time_from' => $date, 
                 'time_to' => $date_add_days, 
                 'more_info' => $faker->sentence(15) , 
                 'created_at' => date('Y-m-d H:i:s'),
-                'customer_id' => $faker->numberBetween(1,10), 
+                'customer_id' => $faker->numberBetween(1,$seedsCount), 
                 'room_id' => $faker->numberBetween(1,10),
-                'payment_id' => $faker->numberBetween(1,10)
+                'payment_id' => $faker->numberBetween(1,$seedsCount)
 
             ];
         }
