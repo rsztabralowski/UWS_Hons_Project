@@ -27,13 +27,17 @@ class CustomerSeeder extends Seeder
 
         $faker = Faker::create();
     	foreach (range(2, $seedsCount) as $i) {
+
+            $firstName = $faker->firstName;
+            $lastName = $faker->lastName;
+
             $inserts[] = [
                 'id' => $i,
-                'first_name' => $faker->firstName, 
-                'last_name' => $faker->lastName, 
+                'first_name' => $firstName, 
+                'last_name' => $lastName, 
                 'address' => $faker->address,
                 'phone' => $faker->phoneNumber,
-                'email' => $faker->email, 
+                'email' => strtolower($firstName).'.'.strtolower($lastName).'@'.$faker->freeEmailDomain, 
                 'created_at' => date('Y-m-d H:i:s'),
             ];
         }

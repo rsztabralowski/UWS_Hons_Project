@@ -30,8 +30,8 @@ class UserSeeder extends Seeder
     	foreach (range(2, $seedsCount) as $i) {
 	       $inserts[] = [
                     'id' => $i,
-                    'name' => $faker->name,
-                    'email' => $faker->email,
+                    'name' => $faker->firstName,
+                    'email' => $faker->freeEmail,
                     'password' => bcrypt('secret'),
                     'remember_token' => '',
                     'created_at' => date('Y-m-d H:i:s'),
