@@ -11,10 +11,12 @@
     <table id="bookings_table" class="table table-bordered" style="witdt:100%">
         <thead>
             <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
                 <th>Time From</th>
                 <th>Time To</th>
-                <th>Last Name</th>
-                <th>Button</th>
+                <th>Action</th>
             </tr>
         </thead>
     </table>
@@ -32,12 +34,15 @@
             $('#bookings_table').DataTable({
                 'processing': true,
                 'serverSide': true,
+                'recordsFiltered': 28,
                 'ajax': '{{ route('bookings.getdata') }}',
                 'columns':[
+                    { 'data': 'first_name'},
+                    { 'data': 'last_name'},
+                    { 'data': 'email'},
                     { 'data': 'time_from'},
                     { 'data': 'time_to'},
-                    { 'data': 'last_name'},
-                    { 'data': 'button'},
+                    { 'data': 'action', orderable:false, searchable: false}
                 ]
             });
 
@@ -82,12 +87,10 @@
                             setTimeout(function(){
                                 $('#form_success_output').hide();
                               }, 2000);
-
                         }
                     }
                 })
             });
-
 {{-- </script> --}}
 @endsection
 

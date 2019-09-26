@@ -29,29 +29,32 @@ class BookingController extends Controller
 
     public function getdata()
     {
-        // $bookings = Booking::select('time_from', 'time_to', 'more_info')->get();
         $bookings = Booking::with('customer', 'room', 'payment')->get();
 
         foreach($bookings as $booking)
         {
-            $button = '
-            <button type="button" name="edit" id="' .$booking->customer->id. '" class="btn btn-default btn-sm edit-btn edit"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-            <button type="button" name="delete" id="' .$booking->customer->id. '" class="btn btn-default btn-sm delete"><span class="glyphicon glyphicon-trash"></span> Delete </button>
-            ';
+            $re = '/\d{4}-\d{2}-\d{2}/';
+            $str_from = $booking->time_from;
+            $str_to = $booking->time_to;
 
-            $response['data'][] = array(
-                'time_from' => $booking->time_from,
-                'time_to' => $booking->time_to,
+            preg_match($re, $str_from, $day_from, PREG_OFFSET_CAPTURE, 0);
+            preg_match($re, $str_to, $day_to, PREG_OFFSET_CAPTURE, 0);
+
+            $response[] = array(
+                'first_name' => $booking->customer->first_name,
                 'last_name' => $booking->customer->last_name,
-                'button' => $button
+                'email' => $booking->customer->email,
+                'time_from' => $day_from[0][0],
+                'time_to' => $day_to[0][0],
+                'id' => $booking->id
             );
         }
 
-       
-
-        // return DataTables::of($bookings)->make(true);
-        // return DataTables::of($response)->make(true);
-        return response()->json($response);
+        return DataTables::of($response)
+            ->addColumn('action', function($response){
+                return '<a href="#" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-edit"></i> Edit</a>';
+               
+            })->make(true);
     }
 
         /**
