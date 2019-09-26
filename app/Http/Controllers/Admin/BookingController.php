@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Validator;
 use App\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DataTables;
+
 
 class BookingController extends Controller
 {
@@ -52,7 +54,7 @@ class BookingController extends Controller
         return response()->json($response);
     }
 
-    /**
+        /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -70,7 +72,46 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'time_from' =>  'required',
+            'time_to' =>  'required',
+        ]);
+
+        $error_array = array();
+        $success_output ='';
+
+        if($validation->fails())
+        {
+            foreach($validation->messages()->getMessages() as $field_name => $messages)
+            {
+                $error_array[] = $messages;
+            }
+        }
+        else
+        {
+            if($request->get('button_action') == 'insert')
+            {
+                $booking = new Booking([
+                    'time_from' => $request->get('time_from'),
+                    'time_to' => $request->get('time_to'),
+                    'more_info' => $request->get('more_info'),
+                    'customer_id' => $request->get('customer_id'),
+                    'room_id' => $request->get('room_id'),
+                    'payment_id' => $request->get('payment_id')
+                ]);
+
+                $booking->save();
+
+                $success_output = '<div class="alert alert-success">Data Inserted</div>';
+            }
+        }
+
+        $output = array(
+            'error'     =>  $error_array,
+            'success'   =>  $success_output
+        );
+
+        echo json_encode($output);
     }
 
     /**
