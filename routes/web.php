@@ -22,7 +22,8 @@ Route::get('/calendar', 'CalendarController@index')->name('calendar');
 
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('panel', 'Admin\BookingController@index');
-    Route::resource('booking', 'Admin\BookingController');
-    Route::resource('room', 'Admin\RoomController');
-    Route::resource('customer', 'Admin\CustomerController');
+    Route::get('bookings/getdata', 'Admin\BookingController@getdata')->name('bookings.getdata');
+    Route::resource('bookings', 'Admin\BookingController');
+    Route::resource('rooms', 'Admin\RoomController');
+    Route::resource('customers', 'Admin\CustomerController');
 });

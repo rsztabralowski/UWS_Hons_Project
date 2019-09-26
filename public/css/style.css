@@ -101,3 +101,7 @@ ul ul a {
 .bg-light {
     background-color: #363636 !important;
 }
+
+#content {
+    width: 100%;
+}
