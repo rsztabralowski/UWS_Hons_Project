@@ -16,6 +16,7 @@
                 <th>Email</th>
                 <th>Time From</th>
                 <th>Time To</th>
+                <th>Room number</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -25,12 +26,8 @@
 
 @section('DataTablesScript')
 {{-- <script> --}}
-        $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          });
-
+      var SITEURL = '{{URL::to('')}}';
+      console.log(SITEURL);
             $('#bookings_table').DataTable({
                 'processing': true,
                 'serverSide': true,
@@ -42,6 +39,7 @@
                     { 'data': 'email'},
                     { 'data': 'time_from'},
                     { 'data': 'time_to'},
+                    { 'data': 'room_number'},
                     { 'data': 'action', orderable:false, searchable: false}
                 ]
             });
@@ -91,6 +89,7 @@
                     }
                 })
             });
+        
 {{-- </script> --}}
 @endsection
 

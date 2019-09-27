@@ -46,14 +46,14 @@ class BookingController extends Controller
                 'email' => $booking->customer->email,
                 'time_from' => $day_from[0][0],
                 'time_to' => $day_to[0][0],
+                'room_number' => $booking->room->room_number,
                 'id' => $booking->id
             );
         }
 
         return DataTables::of($response)
             ->addColumn('action', function($response){
-                return '<a href="#" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-edit"></i> Edit</a>';
-               
+                return '<a href="bookings/'.$response['id'].'/edit" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-edit"></i> Edit</a>';
             })->make(true);
     }
 

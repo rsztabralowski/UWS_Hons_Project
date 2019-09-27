@@ -105,3 +105,11 @@ ul ul a {
 #content {
     width: 100%;
 }
+
+#bookings_table_wrapper{
+    font-size: 12px;
+}
+
+.edit {
+    font-size: 10px;
+}
