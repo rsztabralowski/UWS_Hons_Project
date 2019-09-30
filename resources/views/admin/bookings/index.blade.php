@@ -25,7 +25,8 @@
 @endsection
 
 @section('DataTablesScript')
-{{-- <script> --}}
+<script>
+    $(document).ready(function(){
       var SITEURL = '{{URL::to('')}}';
       console.log(SITEURL);
             $('#bookings_table').DataTable({
@@ -89,8 +90,8 @@
                     }
                 })
             });
-        
-{{-- </script> --}}
+        });
+</script>
 @endsection
 
 @section('modal')

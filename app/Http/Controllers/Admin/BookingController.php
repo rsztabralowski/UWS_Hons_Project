@@ -30,7 +30,6 @@ class BookingController extends Controller
     public function getdata()
     {
         $bookings = Booking::with('customer', 'room', 'payment')->get();
-
         foreach($bookings as $booking)
         {
             $re = '/\d{4}-\d{2}-\d{2}/';
@@ -53,7 +52,10 @@ class BookingController extends Controller
 
         return DataTables::of($response)
             ->addColumn('action', function($response){
-                return '<a href="bookings/'.$response['id'].'/edit" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-edit"></i> Edit</a>';
+                return '<a href="bookings/'.$response['id'].'" class="btn btn-warning edit" id="'.$response['id'].'"><i class="fas fa-eye"></i></a>
+                        <a href="bookings/'.$response['id'].'/edit" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-edit"></i></a>
+                        <a href="bookings/'.$response['id'].'/edit" class="btn btn-danger edit" id="'.$response['id'].'"><i class="fas fa-trash"></i></a>
+                ';
             })->make(true);
     }
 
@@ -125,7 +127,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        dd($booking->customer);
     }
 
     /**
