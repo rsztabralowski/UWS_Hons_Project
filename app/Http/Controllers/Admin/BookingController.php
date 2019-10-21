@@ -127,7 +127,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        dd($booking->customer);
+        return view('admin.bookings.show')->with('booking', $booking);
     }
 
     /**
