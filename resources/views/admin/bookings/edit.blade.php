@@ -2,84 +2,79 @@
 
 @section('content')
 
-<style>
+@php
+use App\Room;
 
-     .booking_info{
-         display: flex;
-         
-        padding: 20px;
+$rooms = Room::all();
+$room_options = '';
+
+foreach($rooms as $room)
+{
+    if($room->room_number == $booking->room['room_number'])
+    {
+        $room_options .= '<option value="' .$room->room_number. '" selected>' .$room->room_number. '</option>';
     }
-
-    .booking_info_left{
-        padding: 20px;
-        width: 50%;
-
+    else
+    {
+        $room_options .= '<option value="' .$room->room_number. '">' .$room->room_number. '</option>';
     }
+}
 
-    .booking_info_right{
-        padding: 20px;
-        width: 50%;
+$re = '/\d{4}-\d{2}-\d{2}/';
+            $str_from = $booking->time_from;
+            $str_to = $booking->time_to;
 
-    }
+            preg_match($re, $str_from, $day_from, PREG_OFFSET_CAPTURE, 0);
+            preg_match($re, $str_to, $day_to, PREG_OFFSET_CAPTURE, 0);
 
-    .padding_20{
-        padding: 20px;
-    }
+@endphp
+<button class="back_btn"><a href="{{ url('/admin/bookings/'. $booking->id) }}"><i class="fas fa-arrow-alt-circle-left"></i> Cancel edit</a></button>
 
-    .title{
-        font-weight: bold;
-    }
-
-    .edit_link{
-        margin-left: 10%;
-    }
-
-    @media (max-width: 660px){
-        .booking_info{
-         display: block;
-        }
-
-        .booking_info_left, .booking_info_right{
-            width: 100%;
-        }
-
-        .booking_info_left{
-            padding-bottom: 0;
-        }
-
-        .booking_info_right{
-            padding-top: 0;
-        }
-    }
-
-</style>
-
-<div class="booking_info">
-    <div class="booking_info_left">
-        <div class="form-group">
-                <label class="title">Customer name</label>
-                <input type="text" name="customer_name" id="customer_name" value="{{$booking->customer['first_name']. ' '. $booking->customer['last_name']}}" class="form-control" />
-        </div>
-        <div class="form-group">
-                <label class="title">Time from</label>
-                <input type="text" name="time_from" id="time_from" value="{{$booking->time_from}}" class="form-control" />
-        </div>
-        <div class="form-group">
-                <label class="title">Time to</label>
-                <input type="text" name="time_to" id="time_to" value="{{$booking->time_to}}" class="form-control" />
-        </div>
-        <div class="form-group">
-                <label class="title">Room number</label>
-                <input type="text" name="room_number" id="room_number" value="{{$booking->room['room_number']}}" class="form-control" />
-        </div>
-    </div>
-    <div class="booking_info_right">
+{!! Form::open(['action' => ['Admin\BookingController@update', $booking->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
+    <div class="booking_info">
+        <div class="booking_info_left">
             <div class="form-group">
-                    <label class="title">More info</label>
-                    <textarea type="text" name="more_info" id="more_info" rows="9" value="" class="form-control">{{$booking->more_info}}</textarea>
+                    <label class="title">Customer name</label>
+                    <input type="text" name="customer_name" id="customer_name" value="{{$booking->customer['first_name']. ' '. $booking->customer['last_name']}}" class="form-control" />
             </div>
+            <div class="form-group">
+                    <label class="title">Time from</label>
+                    <input type="date" name="time_from" id="time_from" value="{{$day_from[0][0]}}" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                    <label class="title">Time to</label>
+                    <input type="date" name="time_to" id="time_to" value="{{$day_to[0][0]}}" class="form-control" required/>
+            </div>
+
+            <div class="form-group">
+                <label class="title">Room number</label>
+                <select class="form-control" name="room_number" id="room_number">
+                  @php echo $room_options @endphp
+                </select>
+            </div>
+            {{-- <div class="form-group">
+                    <label class="title">Room number</label>
+                    <input type="text" name="room_number" id="room_number" value="{{old('room_number', $booking->room['room_number'])}}"  class="form-control" />
+            </div> --}}
         </div>
-</div>
-<button class="edit_link"><a href="">Save</a></button>
+        <div class="booking_info_right">
+                <div class="form-group">
+                        <label class="title">More info</label>
+                        <textarea type="text" name="more_info" id="more_info" rows="9" value="" class="form-control">{{old('more_info', $booking->more_info)}}</textarea>
+                </div>
+            </div>
+    </div>
+    <div class="buttons">
+        {{-- {{Form::submit('Save', ['class'=>'btn btn-primary'])}} --}}
+        {{Form::button('<i class="fas fa-share-square"></i> Save', ['class'=>'btn btn-primary', 'type' => 'submit'])}}
+        {!! Form::close() !!}
+
+        {!!Form::open(['action' => ['Admin\BookingController@destroy', $booking->id], 'method' => 'POST', 'onsubmit' => "return confirm('Are you sure you want to delete?')"])!!}
+        {{Form::hidden('_method', 'DELETE')}}
+        {{-- {{Form::submit('Delete', ['class' => 'btn btn-danger'])}} --}}
+        {{Form::button('<i class="fas fa-trash-alt"></i> Delete', ['class'=>'btn btn-danger', 'type' => 'submit'])}}
+
+        {!!Form::close()!!}
+    </div>
 
 @endsection

@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Validator;
 use App\Booking;
+use App\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Rules\CheckRoomNumber;
 use DataTables;
+use DB;
 
 
 class BookingController extends Controller
@@ -52,10 +55,8 @@ class BookingController extends Controller
 
         return DataTables::of($response)
             ->addColumn('action', function($response){
-                return '<a href="bookings/'.$response['id'].'" class="btn btn-warning edit" id="'.$response['id'].'"><i class="fas fa-eye"></i></a>
-                        <a href="bookings/'.$response['id'].'/edit" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-edit"></i></a>
-                        <a href="bookings/'.$response['id'].'/edit" class="btn btn-danger edit" id="'.$response['id'].'"><i class="fas fa-trash"></i></a>
-                ';
+                return '<a href="bookings/'.$response['id'].'" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-eye"></i></a>
+                        ';
             })->make(true);
     }
 
@@ -150,7 +151,26 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+
+        $this->validate($request, [
+            'room_number' => new CheckRoomNumber
+        ]);
+
+        $update_booking = Booking::find($booking->id);
+        $update_booking->time_from = $request->input('time_from');
+        $update_booking->time_to = $request->input('time_to');
+        $update_booking->more_info = $request->input('more_info');
+        
+        $room = Room::where('room_number', $request->input('room_number'))->get();
+
+        if (isset($room[0]))
+        {
+            $update_booking->room_id = $room[0]->id;
+        }
+
+        $update_booking->save();
+
+        return redirect('/admin/bookings')->with('success', 'Booking updated');
     }
 
     /**
@@ -161,6 +181,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+
+        return redirect('/admin/bookings')->with('success', 'Booking Removed');
     }
 }
