@@ -113,3 +113,65 @@ ul ul a {
 .edit {
     font-size: 10px;
 }
+
+.booking_info{
+    display: flex;
+    
+   padding: 20px;
+}
+
+.booking_info_left{
+   padding: 20px;
+   width: 50%;
+
+}
+
+.booking_info_right{
+   padding: 20px;
+   width: 50%;
+
+}
+
+.padding_20{
+   padding: 20px;
+}
+
+.title{
+   font-weight: bold;
+}
+
+.edit_link{
+   margin-left: 10%;
+}
+
+.back_btn{
+   margin: 30px;
+}
+
+.buttons{
+   display: flex;
+   padding: 10px;
+   justify-content: space-around;
+}
+
+.message{
+   margin: 20px;
+}
+
+@media (max-width: 660px){
+   .booking_info{
+    display: block;
+   }
+
+   .booking_info_left, .booking_info_right{
+       width: 100%;
+   }
+
+   .booking_info_left{
+       padding-bottom: 0;
+   }
+
+   .booking_info_right{
+       padding-top: 0;
+   }
+}

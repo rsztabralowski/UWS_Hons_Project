@@ -2,58 +2,7 @@
 
 @section('content')
 
-<style>
-
-     .booking_info{
-         display: flex;
-         
-        padding: 20px;
-    }
-
-    .booking_info_left{
-        padding: 20px;
-        width: 50%;
-
-    }
-
-    .booking_info_right{
-        padding: 20px;
-        width: 50%;
-
-    }
-
-    .padding_20{
-        padding: 20px;
-    }
-
-    .title{
-        font-weight: bold;
-    }
-
-    .edit_link{
-        margin-left: 10%;
-    }
-
-    @media (max-width: 660px){
-        .booking_info{
-         display: block;
-        }
-
-        .booking_info_left, .booking_info_right{
-            width: 100%;
-        }
-
-        .booking_info_left{
-            padding-bottom: 0;
-        }
-
-        .booking_info_right{
-            padding-top: 0;
-        }
-    }
-
-</style>
-
+<button class="back_btn"><a href="{{ url('admin/bookings') }}"><i class="fas fa-arrow-alt-circle-left"></i> Back to bookings</a></button>
 <div class="booking_info">
     <div class="booking_info_left">
         <div class="form-group">
@@ -80,6 +29,6 @@
             </div>
         </div>
 </div>
-<button class="edit_link"><a href="{{$booking['id']}}/edit">Edit</a></button>
+<button class="edit_link"><a href="{{$booking['id']}}/edit"><i class="fas fa-edit"></i> Edit</a></button>
 
 @endsection
