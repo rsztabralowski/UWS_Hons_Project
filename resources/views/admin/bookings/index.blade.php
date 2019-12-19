@@ -16,7 +16,7 @@
                 <th>Email</th>
                 <th>Time From</th>
                 <th>Time To</th>
-                <th>Room number</th>
+                <th>Room</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -108,11 +108,11 @@
                         <span id="form_error_output"></span>
                         <div class="form-group">
                             <label>Enter Time From</label>
-                            <input type="text" name="time_from" id="time_from" class="form-control" />
+                            <input type="date" name="time_from" id="time_from" class="form-control" />
                         </div>
                         <div class="form-group">
                                 <label>Enter Time To</label>
-                                <input type="text" name="time_to" id="time_to" class="form-control" />
+                                <input type="date" name="time_to" id="time_to" class="form-control" />
                         </div>
                         <div class="form-group">
                                 <label>More info</label>

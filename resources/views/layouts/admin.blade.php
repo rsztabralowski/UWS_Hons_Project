@@ -80,25 +80,26 @@
             <div class="sidebar-header">
             </div>
             <ul class="list-unstyled components">
-                <li class="active">
+                <li class="{{ (request()->is('admin/dashboard')) ? 'active' : '' }}">
                     <a href="#">Dashboard</a>
                 </li>
-                <li>
-                    <a href="#">Bookings</a>
+                <li class="{{ (request()->is('admin/bookings')) ? 'active' : '' }}">
+                    <a href="{{url('/admin/bookings')}}">Bookings</a>
                 </li>
-                <li>
+                <li class="{{ (request()->is('admin/customers')) ? 'active' : '' }}">
                     <a href="#">Customers</a>
                 </li>
-                <li>
+                <li class="{{ (request()->is('admin/rooms')) ? 'active' : '' }}">
                     <a href="#">Rooms</a>
                 </li>
-                <li>
+                <li class="{{ (request()->is('admin/calendar')) ? 'active' : '' }}">
                     <a href="#">Calendar</a>
                 </li>
             </ul>
         </nav>
         <!-- Page Content -->
         <div id="content">
+                @include('admin.inc.messages')
                 @yield('content')
         </div>
     </div>
