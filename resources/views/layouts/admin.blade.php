@@ -117,9 +117,8 @@
           
         });
     </script>
-
+    <!-- DataTables script -->
     @yield('DataTablesScript')
 
 </body>
-@yield('modal')
 </html>

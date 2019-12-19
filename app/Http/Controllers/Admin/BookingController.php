@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Validator;
 use App\Booking;
 use App\Room;
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Rules\CheckRoomNumber;
@@ -67,7 +68,26 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+
+        $customers = Customer::all('id', 'first_name', 'last_name');
+        $customer_list = '';
+
+        foreach($customers as $customer)
+        {
+            $customer_list .= '<option value="'.$customer['id'].'">'.$customer['first_name'].' '.$customer['last_name'].' </option>';
+        }
+
+        $rooms = Room::all();
+        $room_options = '';
+
+        foreach($rooms as $room)
+        {
+            $room_options .= '<option value="' .$room->room_number. '">' .$room->room_number. '</option>';
+        }
+
+        return view('admin.bookings.create')->with('room_options', $room_options)
+                                            ->with('customer_list', $customer_list); 
+
     }
 
     /**
@@ -78,46 +98,33 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(), [
+
+        $this->validate($request, [
             'time_from' =>  'required',
             'time_to' =>  'required',
+            'room_number' => new CheckRoomNumber
         ]);
 
-        $error_array = array();
-        $success_output ='';
+        $room = Room::where('room_number', $request->input('room_number'))->get();
 
-        if($validation->fails())
+        $room_id = '';
+        if (isset($room[0]))
         {
-            foreach($validation->messages()->getMessages() as $field_name => $messages)
-            {
-                $error_array[] = $messages;
-            }
-        }
-        else
-        {
-            if($request->get('button_action') == 'insert')
-            {
-                $booking = new Booking([
-                    'time_from' => $request->get('time_from'),
-                    'time_to' => $request->get('time_to'),
-                    'more_info' => $request->get('more_info'),
-                    'customer_id' => $request->get('customer_id'),
-                    'room_id' => $request->get('room_id'),
-                    'payment_id' => $request->get('payment_id')
-                ]);
-
-                $booking->save();
-
-                $success_output = '<div class="alert alert-success">Data Inserted</div>';
-            }
+            $room_id = $room[0]->id;
         }
 
-        $output = array(
-            'error'     =>  $error_array,
-            'success'   =>  $success_output
-        );
+        $booking = new Booking([
+            'time_from' => $request->get('time_from'),
+            'time_to' => $request->get('time_to'),
+            'more_info' => $request->get('more_info'),
+            'customer_id' => $request->get('customer_id'),
+            'customer_id' => $request->get('customer_name'),
+            'room_id' => $room_id
+        ]);
 
-        echo json_encode($output);
+        $booking->save();
+        
+        return redirect('/admin/bookings')->with('success', 'Booking created');
     }
 
     /**
