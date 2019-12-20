@@ -2,32 +2,6 @@
 
 @section('content')
 
-@php
-use App\Room;
-
-$rooms = Room::all();
-$room_options = '';
-
-foreach($rooms as $room)
-{
-    if($room->room_number == $booking->room['room_number'])
-    {
-        $room_options .= '<option value="' .$room->room_number. '" selected>' .$room->room_number. '</option>';
-    }
-    else
-    {
-        $room_options .= '<option value="' .$room->room_number. '">' .$room->room_number. '</option>';
-    }
-}
-
-$re = '/\d{4}-\d{2}-\d{2}/';
-            $str_from = $booking->time_from;
-            $str_to = $booking->time_to;
-
-            preg_match($re, $str_from, $day_from, PREG_OFFSET_CAPTURE, 0);
-            preg_match($re, $str_to, $day_to, PREG_OFFSET_CAPTURE, 0);
-
-@endphp
 <button class="back_btn"><a href="{{ url('/admin/bookings/'. $booking->id) }}"><i class="fas fa-arrow-alt-circle-left"></i> Cancel edit</a></button>
 
 {!! Form::open(['action' => ['Admin\BookingController@update', $booking->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
