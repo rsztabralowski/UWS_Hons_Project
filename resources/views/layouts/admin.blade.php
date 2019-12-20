@@ -34,9 +34,12 @@
             </nav>
         </div>
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-               {{ config('app.name', 'Laravel') }}
-            </a>
+            <span class="navbar-brand">
+                {{ (request()->is('admin/dashboard*')) ? 'Dashboard' : '' }}
+                {{ (request()->is('admin/bookings*')) ? 'Bookings' : '' }}
+                {{ (request()->is('admin/customers*')) ? 'Customers' : '' }}
+                {{ (request()->is('admin/rooms*')) ? 'Rooms' : '' }}
+            </span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
