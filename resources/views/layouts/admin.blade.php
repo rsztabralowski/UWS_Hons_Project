@@ -93,7 +93,7 @@
                     <a href="{{url('/admin/customers')}}">Customers</a>
                 </li>
                 <li class="{{ (request()->is('admin/rooms*')) ? 'active' : '' }}">
-                    <a href="#">Rooms</a>
+                    <a href="{{url('/admin/rooms')}}">Rooms</a>
                 </li>
                 <li class="{{ (request()->is('admin/calendar*')) ? 'active' : '' }}">
                     <a href="#">Calendar</a>

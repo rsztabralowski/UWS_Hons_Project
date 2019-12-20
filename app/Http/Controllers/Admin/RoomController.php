@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Validator;
+use DataTables;
 
 class RoomController extends Controller
 {
@@ -20,7 +21,32 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.rooms.index'); 
+    }
+
+     /**
+     * Get data to be displayed in DataTables.
+     *
+     * @return DataTables
+     */
+    public function getdata()
+    {
+        $rooms = Room::all();
+        foreach($rooms as $room)
+        {
+            $response[] = array(
+                'id' => $room->id,
+                'room_number' => $room->room_number,
+                'price' => $room->price,
+                'description' => $room->description
+            );
+        }
+
+        return DataTables::of($response)
+            ->addColumn('action', function($response){
+                return '<a href="rooms/'.$response['id'].'" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-eye"></i></a>
+                        ';
+            })->make(true);
     }
 
     /**
@@ -30,7 +56,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.rooms.create'); 
     }
 
     /**
@@ -41,7 +67,20 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'room_number' =>  'required',
+            'price' =>  'required'
+        ]);
+
+        $room = new Room([
+            'room_number' => $request->get('room_number'),
+            'price' => $request->get('price'),
+            'description' => $request->get('description')
+        ]);
+
+        $room->save();
+
+        return redirect('/admin/rooms')->with('success', 'Room Created');
     }
 
     /**
@@ -52,7 +91,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        return view('admin.rooms.show')->with('room', $room);
     }
 
     /**
@@ -63,7 +102,7 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        //
+        return view('admin.rooms.edit')->with('room', $room);
     }
 
     /**
@@ -75,7 +114,19 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        //
+        $this->validate($request, [
+            'room_number' =>  'required',
+            'price' =>  'required|numeric'
+        ]);
+
+        $update_room = Room::find($room->id);
+        $update_room->room_number = $request->get('room_number');
+        $update_room->price = $request->get('price');
+        $update_room->description = $request->get('description');
+
+        $update_room->save();
+
+        return redirect('/admin/rooms')->with('success', 'Room Updated');
     }
 
     /**
@@ -86,6 +137,8 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        // $customer->delete();
+
+        return redirect('/admin/rooms')->with('error', 'Room can not be removed at the moment');
     }
 }

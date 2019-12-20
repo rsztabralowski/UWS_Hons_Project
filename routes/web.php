@@ -24,6 +24,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('panel', 'Admin\BookingController@index')->name('panel');
     Route::get('bookings/getdata', 'Admin\BookingController@getdata')->name('bookings.getdata');
     Route::get('customers/getdata', 'Admin\CustomerController@getdata')->name('customers.getdata');
+    Route::get('rooms/getdata', 'Admin\RoomController@getdata')->name('rooms.getdata');
     Route::resource('bookings', 'Admin\BookingController');
     Route::resource('rooms', 'Admin\RoomController');
     Route::resource('customers', 'Admin\CustomerController');
