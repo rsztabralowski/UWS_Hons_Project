@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Validator;
 use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DataTables;
+
 
 
 class CustomerController extends Controller
@@ -20,7 +23,34 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.customers.index'); 
+    }
+
+     /**
+     * Get data to be displayed in DataTables.
+     *
+     * @return DataTables
+     */
+    public function getdata()
+    {
+        $customers = Customer::all();
+        foreach($customers as $customer)
+        {
+            $response[] = array(
+                'id' => $customer->id,
+                'first_name' => $customer->first_name,
+                'last_name' => $customer->last_name,
+                'phone' => $customer->phone,
+                'email' => $customer->email,
+                'address' => $customer->address
+            );
+        }
+
+        return DataTables::of($response)
+            ->addColumn('action', function($response){
+                return '<a href="customers/'.$response['id'].'" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-eye"></i></a>
+                        ';
+            })->make(true);
     }
 
     /**
@@ -30,7 +60,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.customers.create'); 
     }
 
     /**
@@ -41,7 +71,24 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'first_name' =>  'required',
+            'last_name' =>  'required',
+            'email' => 'email|unique:customers',
+            'phone' => 'required|numeric'
+        ]);
+
+        $customer = new Customer([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'phone' => $request->get('phone'),
+            'email' => $request->get('email'),
+            'address' => $request->get('address')
+        ]);
+
+        $customer->save();
+
+        return redirect('/admin/customers')->with('success', 'Customer Created');
     }
 
     /**
@@ -52,7 +99,8 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        return view('admin.customers.show')->with('customer', $customer);
+
     }
 
     /**
@@ -63,7 +111,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return view('admin.customers.edit')->with('customer', $customer);
     }
 
     /**
@@ -75,7 +123,24 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $this->validate($request, [
+            'first_name' =>  'required',
+            'last_name' =>  'required',
+            'email' => 'email',
+            'phone' => 'required|numeric'
+        ]);
+
+        $update_customer = Customer::find($customer->id);
+        $update_customer->first_name = $request->get('first_name');
+        $update_customer->last_name = $request->get('last_name');
+        $update_customer->phone = $request->get('phone');
+        $update_customer->email = $request->get('email');
+        $update_customer->address = $request->get('address');
+       
+
+        $update_customer->save();
+
+        return redirect('/admin/customers')->with('success', 'Customer Updated');
     }
 
     /**
@@ -86,6 +151,8 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        // $customer->delete();
+
+        return redirect('/admin/customers')->with('error', 'Customer can not be removed at the moment');
     }
 }

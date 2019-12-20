@@ -80,19 +80,19 @@
             <div class="sidebar-header">
             </div>
             <ul class="list-unstyled components">
-                <li class="{{ (request()->is('admin/dashboard')) ? 'active' : '' }}">
+                <li class="{{ (request()->is('admin/dashboard*')) ? 'active' : '' }}">
                     <a href="#">Dashboard</a>
                 </li>
-                <li class="{{ (request()->is('admin/bookings')) ? 'active' : '' }}">
+                <li class="{{ (request()->is('admin/bookings*')) ? 'active' : '' }}">
                     <a href="{{url('/admin/bookings')}}">Bookings</a>
                 </li>
-                <li class="{{ (request()->is('admin/customers')) ? 'active' : '' }}">
-                    <a href="#">Customers</a>
+                <li class="{{ (request()->is('admin/customers*')) ? 'active' : '' }}">
+                    <a href="{{url('/admin/customers')}}">Customers</a>
                 </li>
-                <li class="{{ (request()->is('admin/rooms')) ? 'active' : '' }}">
+                <li class="{{ (request()->is('admin/rooms*')) ? 'active' : '' }}">
                     <a href="#">Rooms</a>
                 </li>
-                <li class="{{ (request()->is('admin/calendar')) ? 'active' : '' }}">
+                <li class="{{ (request()->is('admin/calendar*')) ? 'active' : '' }}">
                     <a href="#">Calendar</a>
                 </li>
             </ul>
