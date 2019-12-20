@@ -31,6 +31,11 @@ class BookingController extends Controller
 
     }
 
+     /**
+     * Get data to be displayed in DataTables.
+     *
+     * @return DataTables
+     */
     public function getdata()
     {
         $bookings = Booking::with('customer', 'room', 'payment')->get();
@@ -61,7 +66,7 @@ class BookingController extends Controller
             })->make(true);
     }
 
-        /**
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -124,7 +129,7 @@ class BookingController extends Controller
 
         $booking->save();
         
-        return redirect('/admin/bookings')->with('success', 'Booking created');
+        return redirect('/admin/bookings')->with('success', 'Booking Created');
     }
 
     /**
@@ -177,7 +182,7 @@ class BookingController extends Controller
 
         $update_booking->save();
 
-        return redirect('/admin/bookings')->with('success', 'Booking updated');
+        return redirect('/admin/bookings')->with('success', 'Booking Updated');
     }
 
     /**

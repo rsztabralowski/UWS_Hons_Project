@@ -3,24 +3,25 @@
 @section('content')
 <br><br>
 <div class="container">
-        <span id="form_success_output"></span>
     <div align='right'>
-    <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('bookings.create')}}">Add</a></button>
+    <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('bookings.create')}}"><i class="fas fa-plus-circle"></i> Add New Booking</a></button>
     </div>
     <br>
-    <table id="bookings_table" class="table table-bordered" style="witdt:100%">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Time From</th>
-                <th>Time To</th>
-                <th>Room</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-    </table>
+    <div class="table-responsive">
+        <table id="bookings_table" class="table table-bordered" style="witdt:100%">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Time From</th>
+                    <th>Time To</th>
+                    <th>Room</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 @endsection
 

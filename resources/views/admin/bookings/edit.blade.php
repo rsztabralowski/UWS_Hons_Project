@@ -52,10 +52,6 @@ $re = '/\d{4}-\d{2}-\d{2}/';
                   @php echo $room_options @endphp
                 </select>
             </div>
-            {{-- <div class="form-group">
-                    <label class="title">Room number</label>
-                    <input type="text" name="room_number" id="room_number" value="{{old('room_number', $booking->room['room_number'])}}"  class="form-control" />
-            </div> --}}
         </div>
         <div class="booking_info_right">
                 <div class="form-group">
@@ -65,13 +61,11 @@ $re = '/\d{4}-\d{2}-\d{2}/';
             </div>
     </div>
     <div class="buttons">
-        {{-- {{Form::submit('Save', ['class'=>'btn btn-primary'])}} --}}
         {{Form::button('<i class="fas fa-share-square"></i> Save', ['class'=>'btn btn-primary', 'type' => 'submit'])}}
         {!! Form::close() !!}
 
         {!!Form::open(['action' => ['Admin\BookingController@destroy', $booking->id], 'method' => 'POST', 'onsubmit' => "return confirm('Are you sure you want to delete?')"])!!}
         {{Form::hidden('_method', 'DELETE')}}
-        {{-- {{Form::submit('Delete', ['class' => 'btn btn-danger'])}} --}}
         {{Form::button('<i class="fas fa-trash-alt"></i> Delete', ['class'=>'btn btn-danger', 'type' => 'submit'])}}
 
         {!!Form::close()!!}
