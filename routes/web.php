@@ -21,10 +21,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/calendar', 'CalendarController@index')->name('calendar');
 
 Route::prefix('admin')->middleware('admin')->group(function(){
-    Route::get('panel', 'Admin\BookingController@index')->name('panel');
+    Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
     Route::get('bookings/getdata', 'Admin\BookingController@getdata')->name('bookings.getdata');
     Route::get('customers/getdata', 'Admin\CustomerController@getdata')->name('customers.getdata');
     Route::get('rooms/getdata', 'Admin\RoomController@getdata')->name('rooms.getdata');
+    Route::get('dashboard', 'Admin\DashboardController@index');
     Route::resource('bookings', 'Admin\BookingController');
     Route::resource('rooms', 'Admin\RoomController');
     Route::resource('customers', 'Admin\CustomerController');

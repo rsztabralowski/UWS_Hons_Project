@@ -84,7 +84,7 @@
             </div>
             <ul class="list-unstyled components">
                 <li class="{{ (request()->is('admin/dashboard*')) ? 'active' : '' }}">
-                    <a href="#">Dashboard</a>
+                    <a href="{{url('/admin/dashboard')}}">Dashboard</a>
                 </li>
                 <li class="{{ (request()->is('admin/bookings*')) ? 'active' : '' }}">
                     <a href="{{url('/admin/bookings')}}">Bookings</a>
