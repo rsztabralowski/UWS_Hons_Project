@@ -7,8 +7,7 @@
     <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('customers.create')}}"><i class="fas fa-plus-circle"></i> Add New Customer</a></button>
     </div>
     <br>
-    <div class="table-responsive">
-        <table id="customers_table" class="table table-bordered" style="witdt:100%">
+        <table id="customers_table" class="display responsive" style="witdt:100%">
             <thead>
                 <tr>
                     <th>First Name</th>
@@ -20,7 +19,6 @@
                 </tr>
             </thead>
         </table>
-    </div>
 </div>
 @endsection
 
@@ -32,8 +30,11 @@
             $('#customers_table').DataTable({
                 'processing': true,
                 "responsive": true,
-                'serverSide': true,
-                'recordsFiltered': 28,
+                "lengthMenu": [
+                    [10, 25, 50, 100, 200, -1],
+                    [10, 25, 50, 100, 200, "All"]
+                ],
+                "pageLength": -1,
                 'ajax': '{{ route('customers.getdata') }}',
                 'columns':[
                     { 'data': 'first_name'},

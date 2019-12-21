@@ -7,8 +7,7 @@
     <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('rooms.create')}}"><i class="fas fa-plus-circle"></i> Add New Room</a></button>
     </div>
     <br>
-    <div class="table-responsive">
-        <table id="rooms_table" class="table table-bordered" style="witdt:100%">
+        <table id="rooms_table" class="display responsive" style="witdt:100%">
             <thead>
                 <tr>
                     <th>Room Number</th>
@@ -18,7 +17,6 @@
                 </tr>
             </thead>
         </table>
-    </div>
 </div>
 @endsection
 
@@ -30,8 +28,11 @@
             $('#rooms_table').DataTable({
                 'processing': true,
                 "responsive": true,
-                'serverSide': true,
-                'recordsFiltered': 28,
+                "lengthMenu": [
+                    [10, 25, 50, 100, 200, -1],
+                    [10, 25, 50, 100, 200, "All"]
+                ],
+                "pageLength": -1,
                 'ajax': '{{ route('rooms.getdata') }}',
                 'columns':[
                     { 'data': 'room_number'},

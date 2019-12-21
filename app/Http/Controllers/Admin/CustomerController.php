@@ -6,7 +6,6 @@ use Validator;
 use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DataTables;
 
 
 
@@ -36,21 +35,17 @@ class CustomerController extends Controller
         $customers = Customer::all();
         foreach($customers as $customer)
         {
-            $response[] = array(
+            $response['data'][] = array(
                 'id' => $customer->id,
                 'first_name' => $customer->first_name,
                 'last_name' => $customer->last_name,
                 'phone' => $customer->phone,
                 'email' => $customer->email,
-                'address' => $customer->address
+                'address' => $customer->address,
+                'action' => '<a href="customers/'.$customer->id.'" class="btn btn-primary edit" id="'.$customer->id.'"><i class="fas fa-eye"></i></a>'
             );
         }
-
-        return DataTables::of($response)
-            ->addColumn('action', function($response){
-                return '<a href="customers/'.$response['id'].'" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-eye"></i></a>
-                        ';
-            })->make(true);
+            echo json_encode($response);
     }
 
     /**

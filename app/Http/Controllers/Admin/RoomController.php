@@ -6,7 +6,6 @@ use App\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
-use DataTables;
 
 class RoomController extends Controller
 {
@@ -34,19 +33,15 @@ class RoomController extends Controller
         $rooms = Room::all();
         foreach($rooms as $room)
         {
-            $response[] = array(
+            $response['data'][] = array(
                 'id' => $room->id,
                 'room_number' => $room->room_number,
                 'price' => $room->price,
-                'description' => $room->description
+                'description' => $room->description,
+                'action' => '<a href="rooms/'.$room->id.'" class="btn btn-primary edit" id="'.$room->id.'"><i class="fas fa-eye"></i></a>'
             );
         }
-
-        return DataTables::of($response)
-            ->addColumn('action', function($response){
-                return '<a href="rooms/'.$response['id'].'" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-eye"></i></a>
-                        ';
-            })->make(true);
+        echo json_encode($response);
     }
 
     /**

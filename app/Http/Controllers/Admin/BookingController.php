@@ -9,7 +9,6 @@ use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Rules\CheckRoomNumber;
-use DataTables;
 use DB;
 
 
@@ -48,22 +47,18 @@ class BookingController extends Controller
             preg_match($re, $str_from, $day_from, PREG_OFFSET_CAPTURE, 0);
             preg_match($re, $str_to, $day_to, PREG_OFFSET_CAPTURE, 0);
 
-            $response[] = array(
+            $response['data'][] = array(
                 'first_name' => $booking->customer->first_name,
                 'last_name' => $booking->customer->last_name,
                 'email' => $booking->customer->email,
                 'time_from' => $day_from[0][0],
                 'time_to' => $day_to[0][0],
                 'room_number' => $booking->room->room_number,
-                'id' => $booking->id
+                'id' => $booking->id,
+                'action' => '<a href="bookings/'.$booking->id.'" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-eye"></i></a>'           
             );
         }
-
-        return DataTables::of($response)
-            ->addColumn('action', function($response){
-                return '<a href="bookings/'.$response['id'].'" class="btn btn-primary edit" id="'.$response['id'].'"><i class="fas fa-eye"></i></a>
-                        ';
-            })->make(true);
+            echo json_encode($response);
     }
 
     /**

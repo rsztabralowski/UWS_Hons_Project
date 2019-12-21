@@ -7,8 +7,7 @@
     <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('bookings.create')}}"><i class="fas fa-plus-circle"></i> Add New Booking</a></button>
     </div>
     <br>
-    <div class="table-responsive">
-        <table id="bookings_table" class="table table-bordered" style="witdt:100%">
+        <table id="bookings_table" class="display responsive" style="witdt:100%">
             <thead>
                 <tr>
                     <th>First Name</th>
@@ -21,7 +20,6 @@
                 </tr>
             </thead>
         </table>
-    </div>
 </div>
 @endsection
 
@@ -32,8 +30,12 @@
       console.log(SITEURL);
             $('#bookings_table').DataTable({
                 'processing': true,
-                'serverSide': true,
-                'recordsFiltered': 28,
+                "responsive": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, 200, -1],
+                    [10, 25, 50, 100, 200, "All"]
+                ],
+                "pageLength": -1,
                 'ajax': '{{ route('bookings.getdata') }}',
                 'columns':[
                     { 'data': 'first_name'},
