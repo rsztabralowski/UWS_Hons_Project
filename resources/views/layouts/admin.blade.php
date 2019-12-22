@@ -30,87 +30,61 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-laravel">
-        <div id="content">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+        <div class="navbar_flex">
+            <div id="content">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn">
-                        <i class="fas fa-align-left"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
-        <div class="container">
+                        <button type="button" id="sidebarCollapse" class="btn">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </nav>
+            </div>
             <span class="navbar-brand">
                 {{ (request()->is('admin/dashboard*')) ? 'Dashboard' : '' }}
                 {{ (request()->is('admin/bookings*')) ? 'Bookings' : '' }}
                 {{ (request()->is('admin/customers*')) ? 'Customers' : '' }}
                 {{ (request()->is('admin/rooms*')) ? 'Rooms' : '' }}
             </span>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-                </ul>
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
-                    @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li>
-                    @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                     {{ Auth::user()->name }} <span class="caret"></span>
-                     </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                        </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                    @endguest
-                </ul>
-            </div>
+            <div class="container"></div>
         </div>
     </nav>
     <div class="wrapper">
         <!-- Sidebar -->
         <nav id="sidebar">
-            <div class="sidebar-header">
-            </div>
+            <div class="sidebar-header"></div>
             <ul class="list-unstyled components">
                 <li class="{{ (request()->is('admin/dashboard*')) ? 'active' : '' }}">
-                    <a href="{{url('/admin/dashboard')}}">Dashboard</a>
+                    <a href="{{url('/admin/dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                 </li>
                 <li class="{{ (request()->is('admin/bookings*')) ? 'active' : '' }}">
-                    <a href="{{url('/admin/bookings')}}">Bookings</a>
+                    <a href="{{url('/admin/bookings')}}"><i class="fas fa-book-open"></i> Bookings</a>
                 </li>
                 <li class="{{ (request()->is('admin/customers*')) ? 'active' : '' }}">
-                    <a href="{{url('/admin/customers')}}">Customers</a>
+                    <a href="{{url('/admin/customers')}}"><i class="fas fa-users"></i> Customers</a>
                 </li>
                 <li class="{{ (request()->is('admin/rooms*')) ? 'active' : '' }}">
-                    <a href="{{url('/admin/rooms')}}">Rooms</a>
+                    <a href="{{url('/admin/rooms')}}"><i class="fas fa-door-open"></i> Rooms</a>
                 </li>
                 <li class="{{ (request()->is('admin/calendar*')) ? 'active' : '' }}">
-                    <a href="#">Calendar</a>
+                    <a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>
             </ul>
         </nav>
         <!-- Page Content -->
         <div id="content">
-                @include('admin.inc.messages')
-                @yield('content')
+            @include('admin.inc.messages') 
+            @yield('content')
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -123,12 +97,9 @@
             $('#sidebarCollapse').on('click', function() {
                 $('#sidebar').toggleClass('active');
             });
-
-          
         });
     </script>
     <!-- DataTables script -->
     @yield('DataTablesScript')
-
 </body>
 </html>
