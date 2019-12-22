@@ -25,7 +25,7 @@ class BookingSeeder extends Seeder
                 'time_to' => $date_add_days, 
                 'more_info' => $faker->sentence(15) , 
                 'created_at' => date('Y-m-d H:i:s'),
-                'customer_id' => $faker->numberBetween(1,$seedsCount), 
+                'user_id' => $faker->numberBetween(1,$seedsCount), 
                 'room_id' => $faker->numberBetween(1,10),
                 'payment_id' => $faker->numberBetween(1,$seedsCount)
 

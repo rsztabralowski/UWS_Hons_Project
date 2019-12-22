@@ -8,8 +8,12 @@
     <div class="booking_info">
         <div class="booking_info_left">
             <div class="form-group">
-                    <label class="title">Customer name</label>
-                    <input type="text" name="customer_name" id="customer_name" value="{{$booking->customer['first_name']. ' '. $booking->customer['last_name']}}" class="form-control" />
+                <label class="title">First name</label>
+                <input type="text" name="first_name" id="first_name" value="{{$booking->user['first_name']}}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="title">Last name</label>
+                <input type="text" name="last_name" id="last_name" value="{{$booking->user['last_name']}}" class="form-control" />
             </div>
             <div class="form-group">
                     <label class="title">Time from</label>

@@ -3,7 +3,7 @@
 @section('content')
 
 <button class="back_btn"><a href="{{ url('admin/customers/'. $customer->id) }}"><i class="fas fa-arrow-alt-circle-left"></i> Cancel edit</a></button>
-{!! Form::open(['action' => ['Admin\CustomerController@update', $customer->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::open(['action' => ['Admin\UserController@update', $customer->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 <div class="booking_info">
         <div class="booking_info_left">
             <div class="form-group">
@@ -34,7 +34,7 @@
         {{Form::button('<i class="fas fa-share-square"></i> Save', ['class'=>'btn btn-primary', 'type' => 'submit'])}}
         {!! Form::close() !!}
 
-        {!!Form::open(['action' => ['Admin\CustomerController@destroy', $customer->id], 'method' => 'POST', 'onsubmit' => "return confirm('Are you sure you want to delete?')"])!!}
+        {!!Form::open(['action' => ['Admin\UserController@destroy', $customer->id], 'method' => 'POST', 'onsubmit' => "return confirm('Are you sure you want to delete?')"])!!}
         {{Form::hidden('_method', 'DELETE')}}
         {{Form::button('<i class="fas fa-trash-alt"></i> Delete', ['class'=>'btn btn-danger', 'type' => 'submit'])}}
 

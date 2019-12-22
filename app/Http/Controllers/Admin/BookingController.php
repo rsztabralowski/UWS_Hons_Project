@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Validator;
 use App\Booking;
 use App\Room;
-use App\Customer;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Rules\CheckRoomNumber;
@@ -37,7 +37,7 @@ class BookingController extends Controller
      */
     public function getdata()
     {
-        $bookings = Booking::with('customer', 'room', 'payment')->get();
+        $bookings = Booking::with('user', 'room', 'payment')->get();
         foreach($bookings as $booking)
         {
             $re = '/\d{4}-\d{2}-\d{2}/';
@@ -48,9 +48,9 @@ class BookingController extends Controller
             preg_match($re, $str_to, $day_to, PREG_OFFSET_CAPTURE, 0);
 
             $response['data'][] = array(
-                'first_name' => $booking->customer->first_name,
-                'last_name' => $booking->customer->last_name,
-                'email' => $booking->customer->email,
+                'first_name' => $booking->user->first_name,
+                'last_name' => $booking->user->last_name,
+                'email' => $booking->user->email,
                 'time_from' => $day_from[0][0],
                 'time_to' => $day_to[0][0],
                 'room_number' => $booking->room->room_number,
@@ -69,7 +69,7 @@ class BookingController extends Controller
     public function create()
     {
 
-        $customers = Customer::all('id', 'first_name', 'last_name');
+        $customers = User::all('id', 'first_name', 'last_name');
         $customer_list = '';
 
         foreach($customers as $customer)
@@ -117,8 +117,7 @@ class BookingController extends Controller
             'time_from' => $request->get('time_from'),
             'time_to' => $request->get('time_to'),
             'more_info' => $request->get('more_info'),
-            'customer_id' => $request->get('customer_id'),
-            'customer_id' => $request->get('customer_name'),
+            'user_id' => $request->get('customer_name'),
             'room_id' => $room_id
         ]);
 
@@ -189,6 +188,10 @@ class BookingController extends Controller
             'room_number' => new CheckRoomNumber
         ]);
 
+        $user = User::find($booking->user_id);
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+
         $update_booking = Booking::find($booking->id);
         $update_booking->time_from = $request->input('time_from');
         $update_booking->time_to = $request->input('time_to');
@@ -202,6 +205,7 @@ class BookingController extends Controller
         }
 
         $update_booking->save();
+        $user->save();
 
         return redirect('/admin/bookings')->with('success', 'Booking Updated');
     }

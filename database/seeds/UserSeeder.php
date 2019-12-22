@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
 
         $inserts[] = [
             'id' => 1,
-            'name' => 'Robert', 
+            'username' => 'Robert', 
             'email' => 'rsztabralowski@gmail.com', 
             'password' => '$2y$10$akHCvTRpvma2eB8VOqUEoOtpWEelS2/e2TZK3LJyfLxuvw8MrQxVq', 
             'remember_token' => '', 
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
     	foreach (range(2, $seedsCount) as $i) {
 	       $inserts[] = [
                     'id' => $i,
-                    'name' => $faker->firstName,
+                    'username' => $faker->firstName,
                     'email' => $faker->freeEmail,
                     'password' => bcrypt('secret'),
                     'remember_token' => '',

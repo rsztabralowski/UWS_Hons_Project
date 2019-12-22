@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Validator;
-use App\Customer;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 
 
-class CustomerController extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
@@ -32,7 +34,7 @@ class CustomerController extends Controller
      */
     public function getdata()
     {
-        $customers = Customer::all();
+        $customers = User::all();
         foreach($customers as $customer)
         {
             $response['data'][] = array(
@@ -69,30 +71,32 @@ class CustomerController extends Controller
         $this->validate($request, [
             'first_name' =>  'required',
             'last_name' =>  'required',
-            'email' => 'email|unique:customers',
+            'email' => 'email|unique:users',
             'phone' => 'required|numeric'
         ]);
 
-        $customer = new Customer([
+        $customer = new User([
+            'username' => Str::random(10),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'phone' => $request->get('phone'),
             'email' => $request->get('email'),
-            'address' => $request->get('address')
+            'address' => $request->get('address'),
+            'password' => Hash::make(Str::random())
         ]);
 
         $customer->save();
 
-        return redirect('/admin/customers')->with('success', 'Customer Created');
+        return redirect('/admin/customers')->with('success', 'User Created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Customer  $customer
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show(User $customer)
     {
         return view('admin.customers.show')->with('customer', $customer);
 
@@ -101,10 +105,10 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Customer  $customer
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit(User $customer)
     {
         return view('admin.customers.edit')->with('customer', $customer);
     }
@@ -113,10 +117,10 @@ class CustomerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Customer  $customer
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, User $customer)
     {
         $this->validate($request, [
             'first_name' =>  'required',
@@ -125,7 +129,7 @@ class CustomerController extends Controller
             'phone' => 'required|numeric'
         ]);
 
-        $update_customer = Customer::find($customer->id);
+        $update_customer = User::find($customer->id);
         $update_customer->first_name = $request->get('first_name');
         $update_customer->last_name = $request->get('last_name');
         $update_customer->phone = $request->get('phone');
@@ -135,7 +139,7 @@ class CustomerController extends Controller
 
         $update_customer->save();
 
-        return redirect('/admin/customers')->with('success', 'Customer Updated');
+        return redirect('/admin/customers')->with('success', 'User Updated');
     }
 
     /**
@@ -144,10 +148,11 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy(User $customer)
     {
-        // $customer->delete();
+        $customer->delete();
 
-        return redirect('/admin/customers')->with('error', 'Customer can not be removed at the moment');
+        return redirect('/admin/customers')->with('success', 'User Deleted');
+        // return redirect('/admin/customers')->with('error', 'Customer can not be removed at the moment');
     }
 }
