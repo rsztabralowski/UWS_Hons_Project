@@ -4,10 +4,10 @@
 <br><br>
 <div class="container">
     <div align='right'>
-    <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('customers.create')}}"><i class="fas fa-plus-circle"></i> Add New Customer</a></button>
+    <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('users.create')}}"><i class="fas fa-plus-circle"></i> Add New User</a></button>
     </div>
     <br>
-        <table id="customers_table" class="display responsive" style="witdt:100%">
+        <table id="users_table" class="display responsive" style="witdt:100%">
             <thead>
                 <tr>
                     <th>First Name</th>
@@ -27,7 +27,7 @@
     $(document).ready(function(){
       var SITEURL = '{{URL::to('')}}';
       console.log(SITEURL);
-            $('#customers_table').DataTable({
+            $('#users_table').DataTable({
                 'processing': true,
                 "responsive": true,
                 "lengthMenu": [
@@ -35,7 +35,7 @@
                     [10, 25, 50, 100, 200, "All"]
                 ],
                 "pageLength": -1,
-                'ajax': '{{ route('customers.getdata') }}',
+                'ajax': '{{ route('users.getdata') }}',
                 'columns':[
                     { 'data': 'first_name'},
                     { 'data': 'last_name'},

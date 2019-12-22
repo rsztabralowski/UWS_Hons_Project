@@ -2,7 +2,7 @@
 
 @section('content')
 
-<button class="back_btn"><a href="{{ url('/admin/customers/') }}"><i class="fas fa-arrow-alt-circle-left"></i> Go back</a></button>
+<button class="back_btn"><a href="{{ url('/admin/users/') }}"><i class="fas fa-arrow-alt-circle-left"></i> Go back</a></button>
 
 {!! Form::open(['action' => ['Admin\UserController@store'], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     <div class="booking_info">

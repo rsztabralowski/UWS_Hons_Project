@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.customers.index'); 
+        return view('admin.users.index'); 
     }
 
      /**
@@ -34,17 +34,17 @@ class UserController extends Controller
      */
     public function getdata()
     {
-        $customers = User::all();
-        foreach($customers as $customer)
+        $users = User::all();
+        foreach($users as $user)
         {
             $response['data'][] = array(
-                'id' => $customer->id,
-                'first_name' => $customer->first_name,
-                'last_name' => $customer->last_name,
-                'phone' => $customer->phone,
-                'email' => $customer->email,
-                'address' => $customer->address,
-                'action' => '<a href="customers/'.$customer->id.'" class="btn btn-primary edit" id="'.$customer->id.'"><i class="fas fa-eye"></i></a>'
+                'id' => $user->id,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'address' => $user->address,
+                'action' => '<a href="users/'.$user->id.'" class="btn btn-primary edit" id="'.$user->id.'"><i class="fas fa-eye"></i></a>'
             );
         }
             echo json_encode($response);
@@ -57,7 +57,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.customers.create'); 
+        return view('admin.users.create'); 
     }
 
     /**
@@ -75,7 +75,7 @@ class UserController extends Controller
             'phone' => 'required|numeric'
         ]);
 
-        $customer = new User([
+        $user = new User([
             'username' => Str::random(10),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -85,9 +85,9 @@ class UserController extends Controller
             'password' => Hash::make(Str::random())
         ]);
 
-        $customer->save();
+        $user->save();
 
-        return redirect('/admin/customers')->with('success', 'User Created');
+        return redirect('/admin/users')->with('success', 'User Created');
     }
 
     /**
@@ -96,9 +96,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $customer)
+    public function show(User $user)
     {
-        return view('admin.customers.show')->with('customer', $customer);
+        return view('admin.users.show')->with('user', $user);
 
     }
 
@@ -108,9 +108,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $customer)
+    public function edit(User $user)
     {
-        return view('admin.customers.edit')->with('customer', $customer);
+        return view('admin.users.edit')->with('user', $user);
     }
 
     /**
@@ -120,7 +120,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $customer)
+    public function update(Request $request, User $user)
     {
         $this->validate($request, [
             'first_name' =>  'required',
@@ -129,30 +129,30 @@ class UserController extends Controller
             'phone' => 'required|numeric'
         ]);
 
-        $update_customer = User::find($customer->id);
-        $update_customer->first_name = $request->get('first_name');
-        $update_customer->last_name = $request->get('last_name');
-        $update_customer->phone = $request->get('phone');
-        $update_customer->email = $request->get('email');
-        $update_customer->address = $request->get('address');
+        $update_user = User::find($user->id);
+        $update_user->first_name = $request->get('first_name');
+        $update_user->last_name = $request->get('last_name');
+        $update_user->phone = $request->get('phone');
+        $update_user->email = $request->get('email');
+        $update_user->address = $request->get('address');
        
 
-        $update_customer->save();
+        $update_user->save();
 
-        return redirect('/admin/customers')->with('success', 'User Updated');
+        return redirect('/admin/users')->with('success', 'User Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Customer  $customer
+     * @param  \App\user  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $customer)
+    public function destroy(User $user)
     {
-        $customer->delete();
+        $user->delete();
 
-        return redirect('/admin/customers')->with('success', 'User Deleted');
-        // return redirect('/admin/customers')->with('error', 'Customer can not be removed at the moment');
+        return redirect('/admin/users')->with('success', 'User Deleted');
+        // return redirect('/admin/users')->with('error', 'user can not be removed at the moment');
     }
 }

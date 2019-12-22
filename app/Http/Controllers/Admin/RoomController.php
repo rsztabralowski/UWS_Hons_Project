@@ -132,7 +132,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        // $customer->delete();
+        // $room->delete();
 
         return redirect('/admin/rooms')->with('error', 'Room can not be removed at the moment');
     }

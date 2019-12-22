@@ -44,7 +44,7 @@
             <span class="navbar-brand">
                 {{ (request()->is('admin/dashboard*')) ? 'Dashboard' : '' }}
                 {{ (request()->is('admin/bookings*')) ? 'Bookings' : '' }}
-                {{ (request()->is('admin/customers*')) ? 'Customers' : '' }}
+                {{ (request()->is('admin/users*')) ? 'Users' : '' }}
                 {{ (request()->is('admin/rooms*')) ? 'Rooms' : '' }}
             </span>
             <div class="container"></div>
@@ -61,8 +61,8 @@
                 <li class="{{ (request()->is('admin/bookings*')) ? 'active' : '' }}">
                     <a href="{{url('/admin/bookings')}}"><i class="fas fa-book-open"></i> Bookings</a>
                 </li>
-                <li class="{{ (request()->is('admin/customers*')) ? 'active' : '' }}">
-                    <a href="{{url('/admin/customers')}}"><i class="fas fa-users"></i> Customers</a>
+                <li class="{{ (request()->is('admin/users*')) ? 'active' : '' }}">
+                    <a href="{{url('/admin/users')}}"><i class="fas fa-users"></i> Users</a>
                 </li>
                 <li class="{{ (request()->is('admin/rooms*')) ? 'active' : '' }}">
                     <a href="{{url('/admin/rooms')}}"><i class="fas fa-door-open"></i> Rooms</a>

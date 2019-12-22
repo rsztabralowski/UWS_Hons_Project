@@ -8,9 +8,9 @@
     <div class="booking_info">
         <div class="booking_info_left">
             <div class="form-group">
-                <label class="title">Customer name</label>
-                <select class="form-control" name="customer_name" id="customer_name">
-                  @php echo $customer_list @endphp
+                <label class="title">User name</label>
+                <select class="form-control" name="user_name" id="user_name">
+                  @php echo $user_list @endphp
                 </select>
             </div>
 

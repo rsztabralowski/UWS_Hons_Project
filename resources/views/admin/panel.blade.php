@@ -15,10 +15,10 @@
                         $total += $booking->payment['amount'];
                     @endphp
                         <a href="{{ url ('/admin/booking/' .$booking['id']. '/edit')}}">
-                        {{$booking->customer['id']}}<br>
-                        {{$booking->customer['first_name']. ' ' . $booking->customer['last_name']}}<br>
-                        {{$booking->customer['address']}}<br>
-                        {{$booking->customer['email']}}<br>
+                        {{$booking->user['id']}}<br>
+                        {{$booking->user['first_name']. ' ' . $booking->user['last_name']}}<br>
+                        {{$booking->user['address']}}<br>
+                        {{$booking->user['email']}}<br>
                         <em>{{$booking->room['description']}}</em><br>
                         {{'£'. $booking->payment['amount']}}<br><hr>
                     </a>

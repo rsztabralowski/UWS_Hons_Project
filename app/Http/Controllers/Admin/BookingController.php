@@ -69,12 +69,12 @@ class BookingController extends Controller
     public function create()
     {
 
-        $customers = User::all('id', 'first_name', 'last_name');
-        $customer_list = '';
+        $users = User::all('id', 'first_name', 'last_name');
+        $user_list = '';
 
-        foreach($customers as $customer)
+        foreach($users as $user)
         {
-            $customer_list .= '<option value="'.$customer['id'].'">'.$customer['first_name'].' '.$customer['last_name'].' </option>';
+            $user_list .= '<option value="'.$user['id'].'">'.$user['first_name'].' '.$user['last_name'].' </option>';
         }
 
         $rooms = Room::all();
@@ -86,7 +86,7 @@ class BookingController extends Controller
         }
 
         return view('admin.bookings.create')->with('room_options', $room_options)
-                                            ->with('customer_list', $customer_list); 
+                                            ->with('user_list', $user_list); 
 
     }
 
@@ -117,7 +117,7 @@ class BookingController extends Controller
             'time_from' => $request->get('time_from'),
             'time_to' => $request->get('time_to'),
             'more_info' => $request->get('more_info'),
-            'user_id' => $request->get('customer_name'),
+            'user_id' => $request->get('user_name'),
             'room_id' => $room_id
         ]);
 
