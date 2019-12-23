@@ -10,6 +10,7 @@
         <table id="users_table" class="display responsive" style="witdt:100%">
             <thead>
                 <tr>
+                    <th>Username</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
@@ -37,6 +38,7 @@
                 "pageLength": -1,
                 'ajax': '{{ route('users.getdata') }}',
                 'columns':[
+                    { 'data': 'username'},
                     { 'data': 'first_name'},
                     { 'data': 'last_name'},
                     { 'data': 'email'},

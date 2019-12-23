@@ -10,8 +10,7 @@
         <table id="bookings_table" class="display responsive" style="witdt:100%">
             <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Username</th>
                     <th>Email</th>
                     <th>Time From</th>
                     <th>Time To</th>
@@ -38,8 +37,7 @@
                 "pageLength": -1,
                 'ajax': '{{ route('bookings.getdata') }}',
                 'columns':[
-                    { 'data': 'first_name'},
-                    { 'data': 'last_name'},
+                    { 'data': 'username'},
                     { 'data': 'email'},
                     { 'data': 'time_from'},
                     { 'data': 'time_to'},

@@ -39,6 +39,7 @@ class UserController extends Controller
         {
             $response['data'][] = array(
                 'id' => $user->id,
+                'username' => $user->username,
                 'first_name' => $user->first_name,
                 'last_name' => $user->last_name,
                 'phone' => $user->phone,
@@ -69,14 +70,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'first_name' =>  'required',
-            'last_name' =>  'required',
+            'username' => 'unique:users',
             'email' => 'email|unique:users',
-            'phone' => 'required|numeric'
+            'phone' => 'nullable|numeric'
         ]);
 
         $user = new User([
-            'username' => Str::random(10),
+            'username' => $request->get('username'),
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'phone' => $request->get('phone'),
@@ -123,13 +123,13 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $this->validate($request, [
-            'first_name' =>  'required',
-            'last_name' =>  'required',
+            'username' => 'unique:users,username,'.$user->id.',id',
             'email' => 'email',
-            'phone' => 'required|numeric'
+            'phone' => 'nullable|numeric'
         ]);
 
         $update_user = User::find($user->id);
+        $update_user->username = $request->get('username');
         $update_user->first_name = $request->get('first_name');
         $update_user->last_name = $request->get('last_name');
         $update_user->phone = $request->get('phone');

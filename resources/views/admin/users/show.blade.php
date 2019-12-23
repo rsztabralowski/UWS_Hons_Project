@@ -6,20 +6,24 @@
 <div class="booking_info">
         <div class="booking_info_left">
             <div class="form-group">
+                <label class="title">Username</label>
+                <input readonly type="text" name="username" id="username" value="{{$user['username']}}" class="form-control"/>
+            </div>
+            <div class="form-group">
                 <label class="title">First name</label>
-                <input readonly type="text" name="first_name" id="first_name" value="{{$user['first_name']}}" class="form-control" required/>
+                <input readonly type="text" name="first_name" id="first_name" value="{{$user['first_name']}}" class="form-control"/>
             </div>
             <div class="form-group">
                 <label class="title">Last name</label>
-                <input readonly type="text" name="last_name" id="last_name" value="{{$user['last_name']}}" class="form-control" required/>
+                <input readonly type="text" name="last_name" id="last_name" value="{{$user['last_name']}}" class="form-control"/>
             </div>
             <div class="form-group">
                 <label class="title">Email</label>
-                <input readonly type="text" name="email" id="email" value="{{$user['email']}}" class="form-control" required/>
+                <input readonly type="text" name="email" id="email" value="{{$user['email']}}" class="form-control"/>
             </div>
             <div class="form-group">
                 <label class="title">Phone number</label>
-                <input readonly type="text" name="phone" id="phone" value="{{$user['phone']}}" class="form-control" required/>
+                <input readonly type="text" name="phone" id="phone" value="{{$user['phone']}}" class="form-control"/>
             </div>
         </div>
         <div class="booking_info_right">

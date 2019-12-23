@@ -48,8 +48,7 @@ class BookingController extends Controller
             preg_match($re, $str_to, $day_to, PREG_OFFSET_CAPTURE, 0);
 
             $response['data'][] = array(
-                'first_name' => $booking->user->first_name,
-                'last_name' => $booking->user->last_name,
+                'username' => $booking->user->username,
                 'email' => $booking->user->email,
                 'time_from' => $day_from[0][0],
                 'time_to' => $day_to[0][0],
@@ -69,12 +68,20 @@ class BookingController extends Controller
     public function create()
     {
 
-        $users = User::all('id', 'first_name', 'last_name');
+        $users = User::all('id', 'username', 'first_name', 'last_name', 'email');
         $user_list = '';
 
         foreach($users as $user)
         {
-            $user_list .= '<option value="'.$user['id'].'">'.$user['first_name'].' '.$user['last_name'].' </option>';
+            if($user->first_name === null)
+            {
+                $user_list .= '<option value="'.$user->id.'">'.$user->username.'</option>';
+            }
+            else
+            {
+                $user_list .= '<option value="'.$user->id.'">'.$user->first_name.' '.$user->last_name.'</option>';
+            }
+
         }
 
         $rooms = Room::all();
