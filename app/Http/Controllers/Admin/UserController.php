@@ -70,7 +70,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'username' => 'unique:users',
+            'username' => 'required|unique:users',
             'email' => 'email|unique:users',
             'phone' => 'nullable|numeric'
         ]);
@@ -123,7 +123,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $this->validate($request, [
-            'username' => 'unique:users,username,'.$user->id.',id',
+            'username' => 'required|unique:users,username,'.$user->id.',id',
             'email' => 'email',
             'phone' => 'nullable|numeric'
         ]);

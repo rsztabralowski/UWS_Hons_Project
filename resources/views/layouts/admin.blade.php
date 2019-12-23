@@ -98,6 +98,10 @@
             $('#sidebarCollapse').on('click', function() {
                 $('#sidebar').toggleClass('active');
             });
+
+            setTimeout(function() {
+                $(".alert").hide('slow');
+            }, 3000);
         });
     </script>
     <!-- DataTables script -->

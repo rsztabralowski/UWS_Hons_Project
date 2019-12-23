@@ -64,7 +64,7 @@ class RoomController extends Controller
     {
         $this->validate($request, [
             'room_number' =>  'required',
-            'price' =>  'required'
+            'price' =>  'required|numeric'
         ]);
 
         $room = new Room([

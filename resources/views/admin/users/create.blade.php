@@ -39,7 +39,13 @@
             </div>
             <div class="form-group">
                 <label class="title">Phone number</label>
-                <input type="text" name="phone" id="phone" value="{{old('phone')}}" class="form-control"/>
+                <input type="text" name="phone" id="phone" value="{{old('phone')}}" class="form-control {{ $errors->has('phone') ? ' is-invalid' : '' }}"/>
+
+                @if ($errors->has('phone'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('phone') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
         <div class="booking_info_right">

@@ -9,11 +9,23 @@
         <div class="booking_info_left">
             <div class="form-group">
                 <label class="title">Room Number</label>
-                <input type="text" name="room_number" id="room_number" value="{{old('room_number', $room->room_number)}}" class="form-control" required/>
+                <input type="text" name="room_number" id="room_number" value="{{old('room_number', $room->room_number)}}" class="form-control {{ $errors->has('room_number') ? ' is-invalid' : '' }}"/>
+
+                @if ($errors->has('room_number'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('room_number') }}</strong>
+                </span>
+            @endif
             </div>
             <div class="form-group">
                 <label class="title">Price</label>
-                <input type="text" name="price" id="price" value="{{old('price', $room->price)}}" class="form-control" required/>
+                <input type="text" name="price" id="price" value="{{old('price', $room->price)}}" class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}"/>
+
+                @if ($errors->has('price'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('price') }}</strong>
+                    </span>
+                @endif
             </div>
         </div>
         <div class="booking_info_right">
