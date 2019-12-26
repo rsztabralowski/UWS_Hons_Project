@@ -25,6 +25,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('bookings/getdata', 'Admin\BookingController@getdata')->name('bookings.getdata');
     Route::get('users/getdata', 'Admin\UserController@getdata')->name('users.getdata');
     Route::get('rooms/getdata', 'Admin\RoomController@getdata')->name('rooms.getdata');
+    Route::get('rooms/getdata', 'Admin\BookingController@checkavail')->name('rooms.checkavail');
     Route::get('dashboard', 'Admin\DashboardController@index');
     Route::resource('bookings', 'Admin\BookingController');
     Route::resource('rooms', 'Admin\RoomController');

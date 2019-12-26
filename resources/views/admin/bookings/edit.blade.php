@@ -25,8 +25,13 @@
             </div>
 
             <div class="form-group">
+                <button name="check" id="check" >Check rooms</button>
+            </div>
+
+            <div class="form-group">
                 <label class="title">Room number</label>
                 <select class="form-control" name="room_number" id="room_number">
+                <option value="" selected disabled hidden>Click check button</option>
                   @php echo $room_options @endphp
                 </select>
             </div>
@@ -36,10 +41,11 @@
                         <label class="title">More info</label>
                         <textarea type="text" name="more_info" id="more_info" rows="9" value="" class="form-control">{{old('more_info', $booking->more_info)}}</textarea>
                 </div>
-            </div>
+        </div>
     </div>
+    <input type="hidden" name="booking_id" id="booking_id" value="{{$booking->id}}"/>
     <div class="buttons">
-        {{Form::button('<i class="fas fa-share-square"></i> Save', ['class'=>'btn btn-primary', 'type' => 'submit'])}}
+        {{Form::button('<i class="fas fa-share-square"></i> Save', ['class'=>'btn btn-primary', 'id' => 'btn_save', 'type' => 'submit'])}}
         {!! Form::close() !!}
 
         {!!Form::open(['action' => ['Admin\BookingController@destroy', $booking->id], 'method' => 'POST', 'onsubmit' => "return confirm('Are you sure you want to delete?')"])!!}

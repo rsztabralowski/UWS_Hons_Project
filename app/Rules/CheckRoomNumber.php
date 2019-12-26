@@ -43,6 +43,6 @@ class CheckRoomNumber implements Rule
      */
     public function message()
     {
-        return 'That room does not exist';
+        return 'No rooms available on selected dates';
     }
 }

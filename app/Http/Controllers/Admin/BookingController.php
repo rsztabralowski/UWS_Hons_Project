@@ -31,6 +31,64 @@ class BookingController extends Controller
     }
 
      /**
+     * Get data to check room availability.
+     *
+     * @return JSON
+     */
+    public function checkavail(Request $request)
+    {
+
+        function testRange($s1,$e1,$s2,$e2)
+        {
+            return ($e1 < $s2 || $s1 > $e2);
+        }
+        
+        $room_available = array();
+        $rooms = Room::all('id', 'room_number');
+        $output = '';
+
+        foreach($rooms as $room)
+        {
+            $bookings = Booking::where('room_id', $room->id)->get();
+
+            $room_available[$room->room_number] = 'Room available';
+
+            foreach ($bookings as $booking)
+            {
+                $room_available[$room->room_number] = 'Room available';
+
+                $s1 = strtotime($request->time_from);
+                $e1 = strtotime($request->time_to);
+                $s2 = strtotime($booking->time_from);
+                $e2 = strtotime($booking->time_to);
+
+                if(!testRange($s1, $e1, $s2, $e2) && $booking->id != $request->booking_id)
+                {
+                    $room_available[$room->room_number] = 'Room not available';
+                    break;
+                }
+            }
+        }
+
+        $count = 0;
+
+        foreach($room_available as $key => $value)
+        {
+            if($value == 'Room available')
+                $output .= '<option value="' .$key. '">' .$key. '</option>';
+
+            if($value == 'Room not available')
+                $count ++;
+
+        }
+
+        if($count == $rooms->count())
+            $output .= '<option value="">No rooms available</option>';
+        
+        echo json_encode($output);
+    }
+
+     /**
      * Get data to be displayed in DataTables.
      *
      * @return DataTables
@@ -109,7 +167,7 @@ class BookingController extends Controller
         $this->validate($request, [
             'time_from' =>  'required',
             'time_to' =>  'required',
-            'room_number' => new CheckRoomNumber
+            'room_number' => ['required', new CheckRoomNumber ]
         ]);
 
         $room = Room::where('room_number', $request->input('room_number'))->get();
@@ -121,8 +179,8 @@ class BookingController extends Controller
         }
 
         $booking = new Booking([
-            'time_from' => $request->get('time_from'),
-            'time_to' => $request->get('time_to'),
+            'time_from' => $request->get('time_from'). ' 15:00:00',
+            'time_to' => $request->get('time_to'). ' 12:00:00',
             'more_info' => $request->get('more_info'),
             'user_id' => $request->get('user_name'),
             'room_id' => $room_id
@@ -192,7 +250,9 @@ class BookingController extends Controller
     {
 
         $this->validate($request, [
-            'room_number' => new CheckRoomNumber
+            'time_from' =>  'required',
+            'time_to' =>  'required',
+            'room_number' => [new CheckRoomNumber]
         ]);
 
         $user = User::find($booking->user_id);
@@ -200,8 +260,8 @@ class BookingController extends Controller
         $user->last_name = $request->input('last_name');
 
         $update_booking = Booking::find($booking->id);
-        $update_booking->time_from = $request->input('time_from');
-        $update_booking->time_to = $request->input('time_to');
+        $update_booking->time_from = $request->input('time_from'). ' 15:00:00';
+        $update_booking->time_to = $request->input('time_to'). ' 12:00:00';
         $update_booking->more_info = $request->input('more_info');
         
         $room = Room::where('room_number', $request->input('room_number'))->get();

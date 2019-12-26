@@ -16,16 +16,21 @@
 
             <div class="form-group">
                     <label class="title">Time from</label>
-                    <input type="date" name="time_from" id="time_from" value="{{old('time_from')}}" class="form-control" required/>
+                    <input name="time_from" id="time_from" value="{{old('time_from')}}" class="form-control" required autocomplete="off"/>
             </div>
             <div class="form-group">
                     <label class="title">Time to</label>
-                    <input type="date" name="time_to" id="time_to" value="{{old('time_to')}}" class="form-control" required/>
+                    <input name="time_to" id="time_to" value="{{old('time_to')}}" class="form-control" required autocomplete="off"/>
+            </div>
+
+            <div class="form-group">
+                <button name="check" id="check" >Check rooms</button>
             </div>
 
             <div class="form-group">
                 <label class="title">Room number</label>
                 <select class="form-control" name="room_number" id="room_number">
+                <option value="" selected disabled hidden>Click check button</option>
                   @php echo $room_options @endphp
                 </select>
             </div>
