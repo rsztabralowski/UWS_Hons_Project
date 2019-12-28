@@ -72,7 +72,7 @@
                     <a href="{{url('/admin/rooms')}}"><i class="fas fa-door-open"></i> Rooms</a>
                 </li>
                 <li class="{{ (request()->is('admin/calendar*')) ? 'active' : '' }}">
-                    <a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a>
+                    <a href="{{url('/admin/calendar')}}"><i class="fas fa-calendar-alt"></i> Calendar</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();

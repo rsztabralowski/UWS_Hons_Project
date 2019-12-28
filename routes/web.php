@@ -22,10 +22,12 @@ Route::get('/calendar', 'CalendarController@index')->name('calendar');
 
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
+    Route::get('calendar', 'Admin\CalendarController@index')->name('calendar');
     Route::get('bookings/getdata', 'Admin\BookingController@getdata')->name('bookings.getdata');
     Route::get('users/getdata', 'Admin\UserController@getdata')->name('users.getdata');
     Route::get('rooms/getdata', 'Admin\RoomController@getdata')->name('rooms.getdata');
-    Route::get('rooms/getdata', 'Admin\BookingController@checkavail')->name('rooms.checkavail');
+    Route::get('rooms/checkavail', 'Admin\BookingController@checkavail')->name('rooms.checkavail');
+    Route::get('calendar/getallbookings', 'Admin\CalendarController@getallbookings')->name('calendar.getallbookings');
     Route::get('dashboard', 'Admin\DashboardController@index');
     Route::resource('bookings', 'Admin\BookingController');
     Route::resource('rooms', 'Admin\RoomController');

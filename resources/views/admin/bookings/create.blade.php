@@ -43,7 +43,7 @@
             </div>
     </div>
     <div class="buttons">
-        {{Form::button('<i class="fas fa-share-square"></i> Save', ['class'=>'btn btn-primary', 'type' => 'submit'])}}
+        {{Form::button('<i class="fas fa-share-square"></i> Save', ['class'=>'btn btn-primary', 'id' => 'btn_save', 'type' => 'submit'])}}
         {!! Form::close() !!}
     </div>
 
