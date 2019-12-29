@@ -207,3 +207,80 @@ ul ul a {
        padding-top: 0;
    }
 }
+
+/* ########################## */
+/* Calendar display */
+/* ########################## */
+
+.days, .names{
+    display: flex;
+    text-align: center;
+}
+
+.day{
+    min-width: 40px;
+    min-height: 40px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+}
+
+.weekdays{
+    min-width: 40px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    background-color: lightgrey;
+    max-height: 25px;
+}
+
+.dayweekcontainer{
+    overflow-x: scroll;
+}
+
+.container_calendar{
+    margin: auto;
+    max-width: 1400px;
+    padding: 10px;
+}
+
+.start{
+    background-image: url('https://icingprint.co.uk/bookings/img_bookings/start.jpg');
+}
+
+.end{
+    background-image: url('https://icingprint.co.uk/bookings/img_bookings/end.jpg');
+}
+
+.available{
+    background-image: url('https://icingprint.co.uk/bookings/img_bookings/available.jpg');
+}
+
+.full{
+    background-image: url('https://icingprint.co.uk/bookings/img_bookings/full.jpg');
+}
+
+.changeover{
+    background-image: url('https://icingprint.co.uk/bookings/img_bookings/changeover.jpg');
+}
+
+.select_container{
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.select_year{
+    padding: 10px;
+}
+
+.select_month{
+    padding: 10px;
+}
+
+#selected_time{
+    text-align: center;
+}
+
+/* ########################## */
+/* End Calendar display */
+/* ########################## */

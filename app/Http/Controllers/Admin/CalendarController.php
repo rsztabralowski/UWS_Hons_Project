@@ -103,13 +103,10 @@ class CalendarController extends Controller
                 }
             }
 
-            $full_list = array();
-
             $years = [$request->year];
             $months = [$request->month];
-            $rooms_list = array_keys($list);
 
-            foreach($rooms_list as $room)
+            foreach($rooms as $room)
             {
                 foreach($years as $year)
                 {
@@ -120,13 +117,13 @@ class CalendarController extends Controller
                         for($i=1; $i<=$in_month_days; $i++)
                         {
 
-                            if(isset($list[$room][$year][$month][$i]))
+                            if(isset($list[$room->room_number][$year][$month][$i]))
                             {
-                                $full_list[$room][$year][$month][$i] = $list[$room][$year][$month][$i];
+                                $full_list[$room->room_number][$year][$month][$i] = $list[$room->room_number][$year][$month][$i];
                             }
                             else
                             {
-                                $full_list[$room][$year][$month][$i] = 'available';
+                                $full_list[$room->room_number][$year][$month][$i] = 'available';
                             }
                         }
                     }
@@ -144,21 +141,29 @@ class CalendarController extends Controller
                 $output .= 'Room '. $room->room_number;
                 $output .= '</div>';
 
-                $output .= '<div class="days">';
+                $output .= '<div class="dayweekcontainer">';
 
-                for($i=1; $i<=$in_month_days; $i++)
-                {
-                    if($full_list[$room->room_number][$year])
-                    $output .= '<div class="day '. $full_list[$room->room_number][$year][$month][$i] .'">'. $i .'</div>';
-                }
+                    $output .= '<div class="names">';
+                    for($i=1; $i<=$in_month_days; $i++)
+                    {
+                        if($full_list[$room->room_number][$year])
+                        $date = $i .'-'. $month .'-'. $year;
+                        $output .= '<div class="weekdays">'. date('D', strtotime($date)) .'</div>';
+                    }
+                    $output .= '</div>';
 
-                $output .= '</div><hr>';
-
+                    $output .= '<div class="days">';
+                    for($i=1; $i<=$in_month_days; $i++)
+                    {
+                        if($full_list[$room->room_number][$year])
+                        $output .= '<div class="day '. $full_list[$room->room_number][$year][$month][$i] .'">'. $i .'</div>';
+                    }
+                    $output .= '</div>';
+                $output .= '</div>';
+                $output .= '<hr>';
             }
             return $output;
         }
-             
-    
 
     public function index()
     {
