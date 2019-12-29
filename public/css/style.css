@@ -190,7 +190,7 @@ ul ul a {
    margin: 20px;
 }
 
-@media (max-width: 660px){
+@media (max-width: 768px){
    .booking_info{
     display: block;
    }
@@ -284,3 +284,40 @@ ul ul a {
 /* ########################## */
 /* End Calendar display */
 /* ########################## */
+
+/* ########################## */
+/* Dashboard display */
+/* ########################## */
+
+.start_end{
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    
+}
+
+.start_end h4{
+    padding-bottom: 10px;
+    border-bottom: 2px solid black;
+}
+
+.starting, .ending{
+    padding: 20px;
+    border: 1px solid black;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.starting{
+   
+}
+
+.ending{
+   
+}
+
+@media (max-width: 768px){
+    .start_end{
+        display: block;
+    }
+}

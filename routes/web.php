@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/calendar', 'CalendarController@index')->name('calendar');
+// Route::get('/calendar', 'CalendarController@index')->name('calendar');
 
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
