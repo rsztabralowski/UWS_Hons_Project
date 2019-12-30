@@ -291,14 +291,15 @@ ul ul a {
 
 .start_end{
     display: flex;
-    justify-content: center;
-    align-content: space-between;
-    
+    justify-content: space-around ;
 }
 
 .start_end h4{
     padding-bottom: 10px;
     border-bottom: 2px solid black;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .starting, .ending{
@@ -306,14 +307,6 @@ ul ul a {
     border: 1px solid black;
     margin: 5px;
     border-radius: 10px;
-}
-
-.starting{
-   
-}
-
-.ending{
-   
 }
 
 @media (max-width: 768px){

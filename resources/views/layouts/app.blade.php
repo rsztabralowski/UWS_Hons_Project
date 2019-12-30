@@ -48,20 +48,18 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
-                            <li class="nav-item">
-                                    @php
-                                    if(auth()->user()->isAdmin == 1)
-                                   
-                                        echo '<a class="nav-link" href='. url('admin/panel') .'>| Admin Panel |</a>';
-                                   
-                                    @endphp    
-                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @php
+                                    if(auth()->user()->isAdmin == 1)
+                                   
+                                        echo '<a class="dropdown-item" href='. url('admin/dashboard') .'>Admin Panel</a>';
+                                   
+                                    @endphp    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
