@@ -95,27 +95,39 @@ class BookingController extends Controller
      */
     public function getdata()
     {
-        $bookings = Booking::with('user', 'room', 'payment')->get();
+        if (request('show_all') == 1) 
+        {
+            $bookings = Booking::all();
+        }
+        elseif (request('show_past') == 1) 
+        {
+            $bookings = Booking::where('time_to', '<', date('Y-m-d'))
+                                 ->get();
+        }
+        else 
+        {
+            $bookings = Booking::where('time_to', '>', date('Y-m-d'))
+                                 ->get();
+        }
+
+         
         foreach($bookings as $booking)
         {
-            $re = '/\d{4}-\d{2}-\d{2}/';
-            $str_from = $booking->time_from;
-            $str_to = $booking->time_to;
-
-            preg_match($re, $str_from, $day_from, PREG_OFFSET_CAPTURE, 0);
-            preg_match($re, $str_to, $day_to, PREG_OFFSET_CAPTURE, 0);
+            $time_from = date('Y-m-d', strtotime( $booking->time_from));
+            $time_to = date('Y-m-d', strtotime( $booking->time_to));
 
             $response['data'][] = array(
                 'username' => $booking->user->username,
                 'email' => $booking->user->email,
-                'time_from' => $day_from[0][0],
-                'time_to' => $day_to[0][0],
+                'time_from' => $time_from,
+                'time_to' => $time_to,
                 'room_number' => $booking->room->room_number,
                 'id' => $booking->id,
                 'action' => '<a href="bookings/'.$booking->id.'" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-eye"></i></a>'           
             );
         }
-            echo json_encode($response);
+
+        echo json_encode($response);
     }
 
     /**
@@ -226,12 +238,8 @@ class BookingController extends Controller
             }
         }
 
-        $re = '/\d{4}-\d{2}-\d{2}/';
-                    $str_from = $booking->time_from;
-                    $str_to = $booking->time_to;
-
-                    preg_match($re, $str_from, $day_from, PREG_OFFSET_CAPTURE, 0);
-                    preg_match($re, $str_to, $day_to, PREG_OFFSET_CAPTURE, 0);
+        $day_from = date('Y-m-d', strtotime( $booking->time_from));
+        $day_to = date('Y-m-d', strtotime( $booking->time_to));
 
         return view('admin.bookings.edit')->with('booking', $booking)
                                           ->with('room_options', $room_options)

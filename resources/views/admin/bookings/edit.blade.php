@@ -17,11 +17,11 @@
             </div>
             <div class="form-group">
                     <label class="title">Time from</label>
-                    <input type="date" name="time_from" id="time_from" value="{{$day_from[0][0]}}" class="form-control" required/>
+                    <input type="date" name="time_from" id="time_from" value="{{$day_from}}" class="form-control" required/>
             </div>
             <div class="form-group">
                     <label class="title">Time to</label>
-                    <input type="date" name="time_to" id="time_to" value="{{$day_to[0][0]}}" class="form-control" required/>
+                    <input type="date" name="time_to" id="time_to" value="{{$day_to}}" class="form-control" required/>
             </div>
 
             <div class="form-group">

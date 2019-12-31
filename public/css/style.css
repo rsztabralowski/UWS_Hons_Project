@@ -309,6 +309,10 @@ ul ul a {
     border-radius: 10px;
 }
 
+.list-inline-item a{
+    color: #3490dc;
+}
+
 @media (max-width: 768px){
     .start_end{
         display: block;
