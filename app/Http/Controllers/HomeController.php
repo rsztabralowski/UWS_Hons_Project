@@ -25,12 +25,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('user_account.home');
     }
 
-    public function admin()
+    public function make_reservation()
     { 
-       //
+        return view('user_account.make_reservation');
+    }
 
+    public function bookings()
+    { 
+        return view('user_account.bookings');
+    }
+
+    public function account()
+    { 
+        return view('user_account.account');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,13 +14,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('calendar');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('/calendar', 'CalendarController@index')->name('calendar');
+
+Route::get('/make_reservation', 'HomeController@make_reservation')->name('make.reservation');
+Route::get('/bookings', 'HomeController@bookings')->name('user.bookings');
+Route::get('/account', 'HomeController@account')->name('user.account');
 
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('bookings', 'Admin\BookingController@index')->name('bookings');

@@ -44,6 +44,7 @@
 
             let d = new Date();
             let month = d.getMonth() + 1;
+            if(month >= 1 && month <=9) month = '0'+ month;
             let year = d.getFullYear();
 
             $('[name=year]').val(year);

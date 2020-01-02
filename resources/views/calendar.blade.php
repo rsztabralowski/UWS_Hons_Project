@@ -11,6 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <style>
             html, body {
                 background-color: #fff;
@@ -22,7 +23,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                min-height: 100vh;
             }
 
             .flex-center {
@@ -69,7 +70,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">My account</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
@@ -79,12 +80,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                        Calendar
                 </div>
-
-                <div class="links">
-                    <a href="{{ url('/calendar') }}">Calendar</a>
-                </div>
+                <button class="btn btn-default links"><a href="{{route('make.reservation')}}">Make reservation</a></button>
             </div>
         </div>
     </body>
