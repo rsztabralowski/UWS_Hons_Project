@@ -52,7 +52,7 @@
                         </table>
                    </div>
                    @else
-                       <p>There are no bookings yet</p>
+                       <p>You have no bookings yet</p>
                    @endif
                 </div>
             </div>

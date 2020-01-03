@@ -2,6 +2,8 @@
 $(document).ready(function()
 {
     var minDate = new Date();
+    $("#time_from").attr('readonly', true).css('background-color', '#fff');
+    $("#time_to").attr('readonly', true).css('background-color', '#fff');
 
     $("#time_from").datepicker({
         showAnim: 'drop',

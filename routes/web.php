@@ -19,11 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'UserAccount\UserAccountController@index')->name('home');
 
-Route::get('/make_reservation', 'HomeController@make_reservation')->name('make.reservation');
-Route::get('/bookings', 'HomeController@bookings')->name('user.bookings');
-Route::get('/account', 'HomeController@account')->name('user.account');
+Route::get('/make_reservation', 'UserAccount\UserAccountController@make_reservation')->name('make.reservation');
+Route::get('/bookings', 'UserAccount\UserAccountController@bookings')->name('user.bookings');
+Route::get('/account', 'UserAccount\UserAccountController@account')->name('user.account');
+Route::put('/account/{user}', 'UserAccount\UserAccountController@update')->name('user.update');
 
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
