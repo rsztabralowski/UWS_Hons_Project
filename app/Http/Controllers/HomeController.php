@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Booking;
 use App\Payment;
 
@@ -35,7 +36,12 @@ class HomeController extends Controller
 
     public function bookings()
     { 
-        return view('user_account.bookings');
+        $bookings = Booking::where('user_id', Auth::id())
+                            ->orderBy('time_from')
+                            ->orderBy('time_to')
+                            ->get();
+
+        return view('user_account.bookings')->with('bookings', $bookings);
     }
 
     public function account()
