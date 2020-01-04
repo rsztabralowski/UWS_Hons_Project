@@ -1,4 +1,3 @@
-<script>
 $(document).ready(function()
 {
     var minDate = new Date();
@@ -62,7 +61,7 @@ $(document).ready(function()
             let booking_id = $('#booking_id').val();
 
             $.ajax({
-                url: '{{route('rooms.checkavail')}}',
+                url: '../rooms/checkavail',
                 data: {
                     time_from: time_from,
                     time_to: time_to,
@@ -98,4 +97,3 @@ $(document).ready(function()
     //     }
     // }
 });
-</script>
