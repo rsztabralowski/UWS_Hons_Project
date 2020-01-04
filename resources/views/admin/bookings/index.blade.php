@@ -13,8 +13,13 @@
             <li class="list-inline-item"><a href="" id='past' data-get="?show_all=1">All</a></li>
         </ul>
     </p>
-    <br>
-        <table id="bookings_table" class="display responsive" style="witdt:100%">
+    <div class="datatables_buttons">
+        <button id="btn-show-all-children" class="btn btn-sm btn-dark" type="button">Expand All</button>
+        <button id="btn-hide-all-children" class="btn btn-sm btn-dark" type="button">Collapse All</button>
+        <br>
+    </div>
+        <br>
+        <table id="bookings_table" class="display responsive" style="width:100%">
             <thead>
                 <tr>
                     <th>Username</th>

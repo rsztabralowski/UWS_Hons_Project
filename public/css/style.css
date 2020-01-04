@@ -317,8 +317,17 @@ ul ul a {
     color: #3490dc;
 }
 
+.datatables_buttons{
+    display: none;
+}
+
 @media (max-width: 768px){
     .start_end{
         display: block;
     }
+
+    .datatables_buttons{
+        display: block;
+    }
+
 }
