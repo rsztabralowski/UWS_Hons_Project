@@ -1,89 +1,133 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                min-height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">My account</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Find available rooms</div>
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    @if(\Session::has('error'))
+                        <div class="alert alert-danger">
+                            {{\Session::get('error')}}
+                        </div>
+                    @endif
+                    <div class="d-flex justify-content-center">
+                        <div class="row">
+                            <div class='col-md-12'>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                    <input type='text' class="form-control" placeholder="Please select dates" name="daterange" id='daterange'/>
+                                </div>
+                            </div>
+                            <input type="hidden" name="time_from" id="time_from" value="" />
+                            <input type="hidden" name="time_to" id="time_to" value="" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <button id="search">Search</button>
+                    </div>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                        Calendar
-                </div>
-                <button class="btn btn-default links"><a href="{{route('make.reservation')}}">Make reservation</a></button>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+    
+@endsection
+
+@section('script')
+
+<script>
+$(document).ready(function()
+{
+    $('#daterange').val('');
+
+    $(function() 
+    {
+        $('#daterange').daterangepicker(
+        {
+            locale: {
+                format: 'DD/MM/YYYY',
+            },
+            autoUpdateInput: false,
+            opens: 'center',
+            minDate: moment().add(1, 'day'),
+        }, 
+        function(start, end, label) 
+        {
+            $('#time_from').val(start.format('YYYY-MM-DD'));
+            $('#time_to').val(end.format('YYYY-MM-DD'));
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+
+        $('#daterange').on('apply.daterangepicker', function(ev, picker) 
+        {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        });
+
+        $('#daterange').on('cancel.daterangepicker', function(ev, picker) 
+        {
+            $(this).val('');
+        });
+    });
+
+    $('#search').on('click', function()
+    {
+
+        let time_from = $('#time_from').val();
+        let time_to = $('#time_to').val();
+
+        if(time_from == '' || time_to == '')
+        {
+            alert('Please select dates');
+        }
+        else if(time_from == time_to)
+        {
+            alert('Please select minimum next day');
+        }
+        else
+        {
+            $.ajax({
+                url: 'user/checkavail',
+                data: {
+                    time_from: time_from,
+                    time_to: time_to
+                },
+                method: 'GET',
+                success: function(result)
+                {
+                    console.log(result);
+                }
+            }) 
+        }
+    });
+});
+</script>  
+@endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

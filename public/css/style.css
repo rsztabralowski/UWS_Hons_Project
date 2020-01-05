@@ -248,23 +248,23 @@ ul ul a {
     padding: 10px;
 }
 
-.start{
+.day.start{
     background-image: url('https://icingprint.co.uk/bookings/img_bookings/start.jpg');
 }
 
-.end{
+.day.end{
     background-image: url('https://icingprint.co.uk/bookings/img_bookings/end.jpg');
 }
 
-.available{
+.day.available{
     background-image: url('https://icingprint.co.uk/bookings/img_bookings/available.jpg');
 }
 
-.full{
+.day.full{
     background-image: url('https://icingprint.co.uk/bookings/img_bookings/full.jpg');
 }
 
-.changeover{
+.day.changeover{
     background-image: url('https://icingprint.co.uk/bookings/img_bookings/changeover.jpg');
 }
 
@@ -330,4 +330,8 @@ ul ul a {
         display: block;
     }
 
+}
+
+.daterangepicker .drp-selected{
+    display: none;
 }

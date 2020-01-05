@@ -49,6 +49,10 @@ $(document).ready(function(){
         table = $('#bookings_table').DataTable({
               'processing': true,
               "responsive": true,
+              'columnDefs': [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: -1 }
+              ],
               "order": [[ 2, "asc" ]],
               "lengthMenu": [
                   [10, 25, 50, 100, 200, -1],
