@@ -39,7 +39,9 @@
                 </div>
             </div>
         </div>
+        <br>
     </div>
+    <div id="result"></div>
 </div>
     
 @endsection
@@ -66,7 +68,6 @@ $(document).ready(function()
         {
             $('#time_from').val(start.format('YYYY-MM-DD'));
             $('#time_to').val(end.format('YYYY-MM-DD'));
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
 
         $('#daterange').on('apply.daterangepicker', function(ev, picker) 
@@ -82,7 +83,6 @@ $(document).ready(function()
 
     $('#search').on('click', function()
     {
-
         let time_from = $('#time_from').val();
         let time_to = $('#time_to').val();
 
@@ -105,11 +105,27 @@ $(document).ready(function()
                 method: 'GET',
                 success: function(result)
                 {
-                    console.log(result);
+                    $('#result').html(result);
+
+                    $('.session').on('click', function(e){
+                        
+                        let booking = $(this).data('booking');
+
+                        $.ajax({
+                            url: 'user/session',
+                            async: false,
+                            data: {
+                                booking: booking
+                            }
+                        })
+                    })
                 }
             }) 
         }
     });
+
+    
+
 });
 </script>  
 @endsection

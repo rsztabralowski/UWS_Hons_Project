@@ -102,6 +102,7 @@
     <script src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/sidebar.js') }}"></script>
 
     @if (Route::is('bookings.create'))
     <script src="{{ asset('js/checkRooms.js') }}"></script>
@@ -109,7 +110,6 @@
     @if (Route::is('bookings.edit'))
     <script src="{{ asset('js/edit_checkRooms.js') }}"></script>
     @endif
-    <script src="{{ asset('js/sidebar.js') }}"></script>
     <!-- DataTables script -->
     @if (Route::current()->getName() == 'bookings.index')
     <script src="{{ asset('js/bookings_datatables.js') }}"></script>

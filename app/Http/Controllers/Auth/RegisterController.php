@@ -30,6 +30,18 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
+    public function redirectTo()
+    {
+        if(session()->has('room'))
+        {
+            return '/make_reservation';
+        }
+        else
+        {
+            return '/';
+        }
+    }
+
     /**
      * Create a new controller instance.
      *

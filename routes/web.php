@@ -25,6 +25,7 @@ Route::get('/make_reservation', 'UserAccount\UserAccountController@make_reservat
 Route::get('/bookings', 'UserAccount\UserAccountController@bookings')->name('user.bookings');
 Route::get('/account', 'UserAccount\UserAccountController@account')->name('user.account');
 Route::get('user/checkavail', 'UserCalendarController@checkavail')->name('user.checkavail');
+Route::get('user/session', 'UserCalendarController@session')->name('user.session');
 Route::put('/account/{user}', 'UserAccount\UserAccountController@update')->name('user.update');
 
 Route::prefix('admin')->middleware('admin')->group(function(){

@@ -20,7 +20,11 @@
                         </div>
                     @endif
 
-                   Here to make reservation
+                   <p>Room: {{session('room')}}</p>
+                   <p>From: {{date('d/m/Y', strtotime(session('time_from')))}}</p>
+                   <p>To: {{date('d/m/Y', strtotime(session('time_to')))}}</p>
+                   <p>Nights: {{session('nights')}}</p>
+                   <p>Price: &pound;{{session('price')}}</p>
                 </div>
             </div>
         </div>
