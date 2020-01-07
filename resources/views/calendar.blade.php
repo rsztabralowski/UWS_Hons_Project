@@ -24,7 +24,7 @@
                         </div>
                     @endif
                     <div class="d-flex justify-content-center">
-                        <div class="row">
+                        <div class="row mt-4">
                             <div class='col-md-12'>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">

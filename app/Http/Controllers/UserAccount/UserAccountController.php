@@ -32,7 +32,14 @@ class UserAccountController extends Controller
 
     public function make_reservation()
     { 
-        return view('user_account.make_reservation');
+        if(session()->has('room'))
+        {
+            return view('user_account.make_reservation');
+        }
+        else
+        {
+            return redirect('/');
+        }
     }
 
     public function bookings()
