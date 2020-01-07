@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoomSeeder::class);
         // $this->call(PaymentSeeder::class);
         // $this->call(BookingSeeder::class);
-       
-       
+
+        
     }
 }
