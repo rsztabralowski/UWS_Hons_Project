@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Payment;
 use App\Booking;
 use App\Room;
+use App\CustomClass\Functions;
 use Auth;
 use Srmklive\PayPal\Services\ExpressCheckout;
 
@@ -22,10 +23,10 @@ class PaypalController extends Controller
 
     public function expressCheckout(Request $request) 
     {
-              
+        
         // get new payment id
-        // $payment_id = Payment::count() + 1;
-        $payment_id = Payment::all()->last()->id + 1;
+        
+        $payment_id = Functions::getRandomNumber(9);
             
         // Get the cart data
         $cart = $this->getCart($payment_id);
@@ -90,20 +91,23 @@ class PaypalController extends Controller
         // so we use getExpressCheckoutDetails($token)
         // to get the payment details
         $response = $this->provider->getExpressCheckoutDetails($token);
-
-        // if response ACK value is not SUCCESS or SUCCESSWITHWARNING
-        // we return back with error
-        if (!in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) 
-        {
-            Payment::find($payment_id)->delete();
-            return redirect('/')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment']);
-        }
-
+        
         // payment id is stored in INVNUM
         // because we set our payment to be xxxx_id
         // we need to explode the string and get the second element of array
         // witch will be the id of the payment
         $payment_id = explode('_', $response['INVNUM'])[1];
+
+        // find payment by id
+        $payment = Payment::find($payment_id);
+
+        // if response ACK value is not SUCCESS or SUCCESSWITHWARNING
+        // we return back with error
+        if (!in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) 
+        {
+            $payment->delete();
+            return redirect('/')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment']);
+        }
 
         // get cart data
         $cart = $this->getCart($payment_id);
@@ -112,9 +116,6 @@ class PaypalController extends Controller
         // and get the payment status
         $payment_status = $this->provider->doExpressCheckoutPayment($cart, $token, $PayerID);
         $status = $payment_status['PAYMENTINFO_0_PAYMENTSTATUS'];
-
-        // find payment by id
-        $payment = Payment::find($payment_id);
 
         // set payment status
         $payment->payment_status = $status;
@@ -149,7 +150,7 @@ class PaypalController extends Controller
             return redirect('/')->with(['code' => 'success', 'message' => 'Order #' . $payment->id . ' has been paid successfully!']);
         }
         
-        Payment::find($payment_id)->delete();
+        $payment->delete();
         return redirect('/')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment for Order #' . $payment->id . '!']);
     }
 
@@ -160,11 +161,16 @@ class PaypalController extends Controller
         $payment_id = explode('_', $response['INVNUM'])[1];
 
         $payment = Payment::find($payment_id);
-        $payment->payment_status = 'Cancelled';
-        $payment->token = $token;
-        // save the payment
-        $payment->save();
 
-        return redirect('/')->with(['code' => 'warning', 'message' => 'PayPal payment has been cancelled']);
+        if($payment->payment_status == 'Completed')
+        {
+            return redirect('/')->with(['code' => 'success', 'message' => 'Order #' . $payment->id . ' has been paid successfully!']);
+        }
+        else
+        {
+            $payment->delete();    
+            return redirect('/')->with(['code' => 'warning', 'message' => 'PayPal payment has been cancelled']);
+        }
+        
     }
 }
