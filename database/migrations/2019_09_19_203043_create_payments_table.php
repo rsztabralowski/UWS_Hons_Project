@@ -15,8 +15,10 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('amount', 8, 2);
-            $table->string('paypaltoken');
+            $table->string('title');
+            $table->double('price', 2);
+            $table->string('payment_status')->nullable();
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

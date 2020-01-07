@@ -28,6 +28,7 @@
                                 <th>Time to</th>                           
                                 <th>Room number</th>
                                 <th>Nights</th>
+                                <th>Deposit</th>
                                 <th>Status</th>
                             </tr>
                             @foreach ($bookings as $booking)
@@ -43,9 +44,17 @@
                                 @endphp 
                                 <td>{{$nights}}</td> 
                                 @if (isset($booking->payment->id))
-                                    <td>&pound;{{$booking->payment->amount}}</td>     
+                                    <td>&pound;{{$booking->payment->price}}</td>
+                                    @if ($booking->payment->payment_status == 'Completed')
+                                        <td><button class="btn btn-sm" style="background-color: lightgreen">{{$booking->payment->payment_status}}</button></td>    
+                                    @elseif ($booking->payment->payment_status == 'Pending')
+                                        <td><button class="btn btn-sm" style="background-color: orange">{{$booking->payment->payment_status}}</button></td>     
+                                    @else
+                                        <td>{{$booking->payment->payment_status}}</td>     
+                                    @endif
                                 @else
-                                    <td>Not Paid</td>
+                                    <td></td>
+                                    <td><button class="btn btn-sm" style="background-color: #ff7f7f">Not Paid</button></td>
                                 @endif    
                             </tr>                      
                             @endforeach

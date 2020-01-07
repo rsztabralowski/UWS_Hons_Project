@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $fillable = ['amount', 'paypaltoken'];
+    protected $fillable = ['title', 'price', 'payment_status', 'token'];
 }

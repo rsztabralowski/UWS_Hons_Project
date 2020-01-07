@@ -13,6 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @if (Session::has('message'))
+                        <div class="alert alert-{{ Session::get('code') }}">
+                            <p>{{ Session::get('message') }}</p>
+                        </div>
+                    @endif
                     @if(\Session::has('error'))
                         <div class="alert alert-danger">
                             {{\Session::get('error')}}

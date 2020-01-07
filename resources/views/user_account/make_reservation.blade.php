@@ -25,6 +25,7 @@
                    <p>To: {{date('d/m/Y', strtotime(session('time_to')))}}</p>
                    <p>Nights: {{session('nights')}}</p>
                    <p>Price: &pound;{{session('price')}}</p>
+                   <a href="{{ route('paypal.express-checkout') }}" class='btn-info btn'>PayPal</a>
                 </div>
             </div>
         </div>

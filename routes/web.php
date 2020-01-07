@@ -21,6 +21,9 @@ Auth::routes();
 
 Route::get('/home', 'UserAccount\UserAccountController@index')->name('home');
 
+// ################
+// USER
+// ################
 Route::get('/make_reservation', 'UserAccount\UserAccountController@make_reservation')->name('make.reservation');
 Route::get('/bookings', 'UserAccount\UserAccountController@bookings')->name('user.bookings');
 Route::get('/account', 'UserAccount\UserAccountController@account')->name('user.account');
@@ -28,6 +31,17 @@ Route::get('user/checkavail', 'UserCalendarController@checkavail')->name('user.c
 Route::get('user/session', 'UserCalendarController@session')->name('user.session');
 Route::put('/account/{user}', 'UserAccount\UserAccountController@update')->name('user.update');
 
+// ################
+// PAYPAL
+// ################
+Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');
+Route::get('paypal/express-checkout-success', 'PaypalController@expressCheckoutSuccess');
+Route::get('paypal/cancelled', 'PaypalController@cancelled');
+Route::post('paypal/notify', 'PaypalController@notify');
+
+// ################
+// ADMIN
+// ################
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
     Route::get('calendar', 'Admin\CalendarController@index')->name('calendar');
