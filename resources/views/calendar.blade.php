@@ -33,8 +33,8 @@
                                     <input type='text' class="form-control" placeholder="Please select dates" name="daterange" id='daterange'/>
                                 </div>
                             </div>
-                            <input type="hidden" name="time_from" id="time_from" value="" />
-                            <input type="hidden" name="time_to" id="time_to" value="" />
+                            <input readonly type="hidden" name="time_from" id="time_from" value="" />
+                            <input readonly type="hidden" name="time_to" id="time_to" value="" />
                         </div>
                     </div>
                     <br>
@@ -98,6 +98,13 @@ $(document).ready(function()
         else if(time_from == time_to)
         {
             alert('Please select minimum next day');
+        }
+        else if( time_from < moment().add(1, 'day').format('YYYY-MM-DD')
+            || time_to < moment().add(2, 'day').format('YYYY-MM-DD')
+            || moment(time_from).format('YYYY-MM-DD') == 'Invalid date'                                    
+            || moment(time_to).format('YYYY-MM-DD') == 'Invalid date')                                  
+        {
+            alert('Invalid dates');
         }
         else
         {
