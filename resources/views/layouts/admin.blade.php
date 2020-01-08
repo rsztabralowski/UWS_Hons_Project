@@ -47,6 +47,7 @@
                 {{ (request()->is('admin/bookings*')) ? 'Bookings' : '' }}
                 {{ (request()->is('admin/users*')) ? 'Users' : '' }}
                 {{ (request()->is('admin/rooms*')) ? 'Rooms' : '' }}
+                {{ (request()->is('admin/calendar*')) ? 'Calendar' : '' }}
             </span>
             <div class="container"></div>
         </div>
