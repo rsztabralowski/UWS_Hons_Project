@@ -15,13 +15,12 @@ $(document).ready(function(){
     });
 
     table = $('#bookings_table').DataTable({
-              'processing': true,
               "responsive": true,
               'columnDefs': [
                     { responsivePriority: 1, targets: 0 },
                     { responsivePriority: 2, targets: -1 }
                 ],
-              "order": [[ 2, "asc" ]],
+              "order": [[ 3, "asc" ]],
               "lengthMenu": [
                   [10, 25, 50, 100, 200, -1],
                   [10, 25, 50, 100, 200, "All"]
@@ -29,12 +28,17 @@ $(document).ready(function(){
               "pageLength": -1,
               'ajax': 'bookings/getdata',
               'columns':[
-                  { 'data': 'username'},
-                  { 'data': 'email'},
-                  { 'data': 'time_from'},
-                  { 'data': 'time_to'},
-                  { 'data': 'room_number'},
-                  { 'data': 'action', orderable:false, searchable: false}
+                { 'data': 'id'},
+                { 'data': 'username'},
+                { 'data': 'email'},
+                { 'data': 'time_from'},
+                { 'data': 'time_to'},
+                { 'data': 'room_number'},
+                { 'data': 'nights'},
+                { 'data': 'price'},
+                { 'data': 'deposit'},
+                { 'data': 'status'},
+                { 'data': 'action', orderable:false, searchable: false}
               ]
           });
 
@@ -47,13 +51,12 @@ $(document).ready(function(){
         let query = $(this).data('get');
         table.destroy();
         table = $('#bookings_table').DataTable({
-              'processing': true,
               "responsive": true,
               'columnDefs': [
                 { responsivePriority: 1, targets: 0 },
                 { responsivePriority: 2, targets: -1 }
               ],
-              "order": [[ 2, "asc" ]],
+              "order": [[ 3, "asc" ]],
               "lengthMenu": [
                   [10, 25, 50, 100, 200, -1],
                   [10, 25, 50, 100, 200, "All"]
@@ -62,13 +65,18 @@ $(document).ready(function(){
               'method': 'GET',
               'ajax': 'bookings/getdata' + query,
               'columns':[
-                  { 'data': 'username'},
-                  { 'data': 'email'},
-                  { 'data': 'time_from'},
-                  { 'data': 'time_to'},
-                  { 'data': 'room_number'},
-                  { 'data': 'action', orderable:false, searchable: false}
-              ]
+                { 'data': 'id'},
+                { 'data': 'username'},
+                { 'data': 'email'},
+                { 'data': 'time_from'},
+                { 'data': 'time_to'},
+                { 'data': 'room_number'},
+                { 'data': 'nights'},
+                { 'data': 'price'},
+                { 'data': 'deposit'},
+                { 'data': 'status'},
+                { 'data': 'action', orderable:false, searchable: false}
+              ],
           });
       });
   });

@@ -22,11 +22,16 @@
         <table id="bookings_table" class="display responsive" style="width:100%">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Username</th>
                     <th>Email</th>
                     <th>Time From</th>
                     <th>Time To</th>
                     <th>Room</th>
+                    <th>Nights</th>
+                    <th>Price</th>
+                    <th>Deposit</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>

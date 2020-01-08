@@ -6,6 +6,7 @@ use Validator;
 use App\Booking;
 use App\Room;
 use App\User;
+use App\CustomClass\Calendar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Rules\CheckRoomNumber;
@@ -95,6 +96,9 @@ class BookingController extends Controller
      */
     public function getdata()
     {
+
+        $response = array();
+
         if (request('show_all') == 1) 
         {
             $bookings = Booking::all();
@@ -115,14 +119,35 @@ class BookingController extends Controller
         {
             $time_from = date('Y-m-d', strtotime( $booking->time_from));
             $time_to = date('Y-m-d', strtotime( $booking->time_to));
+            $nights = count(Calendar::date_range($time_from, $time_to)) -1;
+            $price =  round($booking->room->price * $nights, 2);
+            $deposit = round(($price * 0.2), 2);
+
+            if (isset($booking->payment->id))
+            {
+                if ($booking->payment->payment_status == 'Completed')
+                    $status = '<button class="btn btn-sm" style="background-color: lightgreen">'. $booking->payment->payment_status .'</button>';
+                elseif ($booking->payment->payment_status == 'Pending')
+                    $status = '<button class="btn btn-sm" style="background-color: orange">'. $booking->payment->payment_status .'</button>';
+                else
+                    $status = $booking->payment->payment_status;
+            }
+            else
+            {
+                $status = '<button class="btn btn-sm" style="background-color: #ff7f7f">Not Paid</button>';
+            }
 
             $response['data'][] = array(
+                'id' => $booking->id,
                 'username' => $booking->user->username,
                 'email' => $booking->user->email,
                 'time_from' => $time_from,
                 'time_to' => $time_to,
                 'room_number' => $booking->room->room_number,
-                'id' => $booking->id,
+                'nights' => $nights,
+                'price' => '&pound;'. $price,
+                'deposit' => '&pound;'. $deposit,
+                'status' => $status,
                 'action' => '<a href="bookings/'.$booking->id.'" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-eye"></i></a>'           
             );
         }
