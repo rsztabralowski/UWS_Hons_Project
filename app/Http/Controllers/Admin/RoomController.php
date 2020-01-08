@@ -38,7 +38,7 @@ class RoomController extends Controller
                 'room_number' => $room->room_number,
                 'price' => $room->price,
                 'description' => $room->description,
-                'action' => '<a href="rooms/'.$room->id.'" class="btn btn-primary edit" id="'.$room->id.'"><i class="fas fa-eye"></i></a>'
+                'action' => '<a href="rooms/'.$room->id.'/edit" class="btn btn-primary edit" id="'.$room->id.'"><i class="fas fa-edit"></i></a>'
             );
         }
         echo json_encode($response);

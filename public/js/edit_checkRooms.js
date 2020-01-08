@@ -44,7 +44,6 @@ $(document).ready(function()
     });
     
     $('#room_number').attr('disabled', true);
-    $('#btn_save').attr('disabled', true);
 
     $('#check').on('click', function(e)
     {

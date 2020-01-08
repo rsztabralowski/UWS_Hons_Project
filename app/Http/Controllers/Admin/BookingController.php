@@ -6,6 +6,7 @@ use Validator;
 use App\Booking;
 use App\Room;
 use App\User;
+use App\Payment;
 use App\CustomClass\Calendar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -129,6 +130,8 @@ class BookingController extends Controller
                     $status = '<button class="btn btn-sm" style="background-color: lightgreen">'. $booking->payment->payment_status .'</button>';
                 elseif ($booking->payment->payment_status == 'Pending')
                     $status = '<button class="btn btn-sm" style="background-color: orange">'. $booking->payment->payment_status .'</button>';
+                elseif ($booking->payment->payment_status == 'Not Paid')
+                    $status = '<button class="btn btn-sm" style="background-color: #ff7f7f">'. $booking->payment->payment_status .'</button>';
                 else
                     $status = $booking->payment->payment_status;
             }
@@ -148,7 +151,7 @@ class BookingController extends Controller
                 'price' => '&pound;'. $price,
                 'deposit' => '&pound;'. $deposit,
                 'status' => $status,
-                'action' => '<a href="bookings/'.$booking->id.'" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-eye"></i></a>'           
+                'action' => '<a href="bookings/'.$booking->id.'/edit" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-edit"></i></a>'           
             );
         }
 
@@ -296,7 +299,14 @@ class BookingController extends Controller
         $update_booking->time_from = $request->input('time_from'). ' 15:00:00';
         $update_booking->time_to = $request->input('time_to'). ' 12:00:00';
         $update_booking->more_info = $request->input('more_info');
-        
+
+        if($request->input('status') != 'null' && Payment::find($booking->payment_id) != null)
+        {
+            $payment = Payment::find($booking->payment_id);
+            $payment->payment_status = $request->input('status');
+            $payment->save();
+        }
+
         $room = Room::where('room_number', $request->input('room_number'))->get();
 
         if (isset($room[0]))

@@ -45,7 +45,7 @@ class UserController extends Controller
                 'phone' => $user->phone,
                 'email' => $user->email,
                 'address' => $user->address,
-                'action' => '<a href="users/'.$user->id.'" class="btn btn-primary edit" id="'.$user->id.'"><i class="fas fa-eye"></i></a>'
+                'action' => '<a href="users/'.$user->id.'/edit" class="btn btn-primary edit" id="'.$user->id.'"><i class="fas fa-edit"></i></a>'
             );
         }
             echo json_encode($response);

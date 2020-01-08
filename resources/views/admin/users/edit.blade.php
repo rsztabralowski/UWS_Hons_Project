@@ -2,7 +2,7 @@
 
 @section('content')
 
-<button class="back_btn"><a href="{{ url('admin/users/'. $user->id) }}"><i class="fas fa-arrow-alt-circle-left"></i> Cancel edit</a></button>
+<button class="back_btn"><a href="{{ url('admin/users') }}"><i class="fas fa-arrow-alt-circle-left"></i> Cancel edit</a></button>
 {!! Form::open(['action' => ['Admin\UserController@update', $user->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 <div class="booking_info">
         <div class="booking_info_left">

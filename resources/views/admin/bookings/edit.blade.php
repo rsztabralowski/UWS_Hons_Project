@@ -2,7 +2,7 @@
 
 @section('content')
 
-<button class="back_btn"><a href="{{ url('/admin/bookings/'. $booking->id) }}"><i class="fas fa-arrow-alt-circle-left"></i> Cancel edit</a></button>
+<button class="back_btn"><a href="{{ url('/admin/bookings') }}"><i class="fas fa-arrow-alt-circle-left"></i> Cancel edit</a></button>
 
 {!! Form::open(['action' => ['Admin\BookingController@update', $booking->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
     <div class="booking_info">
@@ -40,7 +40,17 @@
                 <div class="form-group">
                         <label class="title">More info</label>
                         <textarea type="text" name="more_info" id="more_info" rows="9" value="" class="form-control">{{old('more_info', $booking->more_info)}}</textarea>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="title">Status</label>
+                        <select class="form-control" name="status" id="status">
+                            <option value="null"></option>
+                            <option value="Completed">Completed</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Not Paid">Not Paid</option>
+                        </select>
+                    </div>
         </div>
     </div>
     <input type="hidden" name="booking_id" id="booking_id" value="{{$booking->id}}"/>
