@@ -321,6 +321,25 @@ ul ul a {
     display: none;
 }
 
+
+
+.daterangepicker .drp-selected{
+    display: none;
+}
+
+.photos, img.d-block.w-100 {
+    margin: auto;
+    height: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.main-price{
+    font-size: 40px;
+    font-weight: bold;
+}
+
 @media (max-width: 768px){
     .start_end{
         display: block;
@@ -330,8 +349,11 @@ ul ul a {
         display: block;
     }
 
-}
+    .photos, img.d-block.w-100 {
+        margin: auto;
+        height: 200px;
+        max-height: 200px;
+        min-width: 200px;
+    }
 
-.daterangepicker .drp-selected{
-    display: none;
 }
