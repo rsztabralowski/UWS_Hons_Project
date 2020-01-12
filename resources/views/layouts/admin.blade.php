@@ -124,5 +124,6 @@
     @if (Route::current()->getName() == 'calendar')
     <script src="{{ asset('js/calendar.js') }}"></script>
     @endif
+    @yield('script')
 </body>
 </html>

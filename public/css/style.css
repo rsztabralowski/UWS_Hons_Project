@@ -340,6 +340,39 @@ ul ul a {
     font-weight: bold;
 }
 
+.photo{
+    position: relative;
+    /* justify-content: center; */
+}
+
+.remove-photo span{
+    width: 100%;
+}
+
+.remove-photo{
+    display: flex;
+    justify-content: center;
+    /* align-content: center; */
+    background-color: red;
+    text-align: center;
+    width: 30px;
+    height: 24px;
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #FFF;
+    border-radius: 5px;
+}
+
+.room-photos{
+    width: 250px;
+}
+
+
+
 @media (max-width: 768px){
     .start_end{
         display: block;
@@ -354,6 +387,7 @@ ul ul a {
         height: 200px;
         max-height: 200px;
         min-width: 200px;
+        max-width: 300px;
     }
 
 }

@@ -56,17 +56,6 @@ class UserCalendarController extends Controller
         $session = array();
         $html .= '<div class="row justify-content-center">';
 
-        
-
-        // if(is_object($photos))
-        // {
-        //     $photos = (object) array(0 => (object) array('url' => 'https://icingprint.co.uk/books/img/no.jpg'));
-        // }
-
-        // $photos = [ 'https://teighmore-assets.s3.amazonaws.com/media/filer_public_thumbnails/filer_public/f8/43/f8437568-8cd3-402f-87cd-27919c2d897f/rooms-and-suites-main-image.jpg__954x493_q85_crop_subsampling-2_upscale.jpg', 
-        //             'https://www.marinabaysands.com/content/dam/singapore/marinabaysands/master/main/home/hotel/rooms-suites/premier-room/premiere%201_1920x960.jpg', 
-        //             'https://q-cf.bstatic.com/images/hotel/max1024x768/166/166584457.jpg'];
-
         foreach($room_available as $key_rooms => $room_array)
         {
             if(is_object($room_array))
@@ -75,7 +64,7 @@ class UserCalendarController extends Controller
 
                 if($photos->isEmpty())
                 {
-                    $photos = (object) array(0 => (object) array('url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLJzaPoFd70YG1ZhdgHT_nNQX06h4XlOxyjEvy2KQy_aA8QbYo2w&s'));
+                    $photos[] = (object) array('url' => 'no_photo.png');
                 }
 
                 $booking_days = Calendar::date_range($request->time_from, $request->time_to);
@@ -122,18 +111,20 @@ class UserCalendarController extends Controller
                 $photo_count = 0;
                                 foreach($photos as $photo)
                                 {
+                                    $url = asset('storage/room_photos/'. $photo->url);
+
                                     if($photo_count == 0)
                                     {
                                         $html .= '
                                         <div class="carousel-item active">
-                                            <img class="d-block w-100" src="'. $photo->url .'" alt="Room '. $room_array->room_number .'">
+                                            <img class="d-block w-100" src="'. $url .'" alt="Room '. $room_array->room_number .'">
                                         </div>';
                                     }
                                     else
                                     {
                                         $html .= '
                                         <div class="carousel-item">
-                                            <img class="d-block w-100" src="'. $photo->url .'" alt="Room '. $room_array->room_number .'">
+                                            <img class="d-block w-100" src="'. $url .'" alt="Room '. $room_array->room_number .'">
                                         </div>';
                                     }
                                     $photo_count++;

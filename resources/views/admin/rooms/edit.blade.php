@@ -46,4 +46,48 @@
         {!!Form::close()!!}
     </div>
 
+    <hr>
+
+    {!! Form::open(['action' => 'Admin\RoomController@addphoto', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+        <div class="form-group m-5">
+            {{Form::file('room_photo')}}
+            {{Form::hidden('room_id', $room->id )}}
+            {{Form::submit('Submit', ['class'=>'btn btn-primary m-3'])}}
+        </div>
+    {!! Form::close() !!}
+
+    
+    <div class="d-flex flex-wrap justify-content-around">
+        @foreach ($photos as $photo)
+            <div class="d-flex photo">
+                <div class="remove-photo" id="{{$photo->id}}"><span>X</span></div>
+                <img class="room-photos m-2"  src="{{ url('/storage/room_photos/' .$photo->url)}}" alt="{{$photo->id}}">
+            </div>
+        @endforeach
+    </div>
+
+@endsection
+
+@section('script')
+
+<script>
+    $(function(){
+        $('.remove-photo').on('click', function()
+        {
+            if(confirm('Are you sure you want to delete?'))
+            {
+                var photo_id = ($(this).attr('id'));
+                    $.ajax({
+                        'url': '{{route('rooms.photodestroy')}}',
+                        'method': 'GET',
+                        'data': {photo_id : photo_id},
+                         success: function(){
+                            location.reload();
+                        }
+                    })
+            }
+        })
+    });
+</script>
+    
 @endsection

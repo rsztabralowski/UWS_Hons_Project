@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Room;
+use App\Photo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 
 class RoomController extends Controller
@@ -97,7 +99,10 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        return view('admin.rooms.edit')->with('room', $room);
+        $photos = Photo::where('room_id', $room->id)->get();
+
+        return view('admin.rooms.edit')->with('room', $room)
+                                       ->with('photos', $photos);
     }
 
     /**
@@ -135,5 +140,44 @@ class RoomController extends Controller
         // $room->delete();
 
         return redirect('/admin/rooms')->with('error', 'Room can not be removed at the moment');
+    }
+
+    public function photodestroy(Request $request)
+    {
+        $photo = Photo::find($request->photo_id);
+
+        Storage::delete('public/room_photos/'. $photo->url);
+
+        $photo->delete();
+    }
+
+    public function addphoto(Request $request, Room $room)
+    {
+        $this->validate($request, [
+            'room_photo' => 'required|image|max:1999'
+        ]);
+
+        // Handle File Upload
+        if($request->hasFile('room_photo'))
+        {
+            // Get filename with the extension
+            $filenameWithExt = $request->file('room_photo')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('room_photo')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('room_photo')->storeAs('public/room_photos', $fileNameToStore);
+        } 
+
+        $photo = new Photo;
+        $photo->room_id = $request->room_id;
+        $photo->url = $fileNameToStore;
+
+        $photo->save();
+
+        return redirect()->back()->with('success', 'Photo added');
     }
 }
