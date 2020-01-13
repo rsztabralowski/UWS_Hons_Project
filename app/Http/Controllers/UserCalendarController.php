@@ -76,7 +76,8 @@ class UserCalendarController extends Controller
                     'time_from' => $request->time_from,
                     'time_to' => $request->time_to,
                     'nights' => $nights,
-                    'price' => $price
+                    'price' => $price,
+                    'photo' => $photos[0]['url']
                 ];
 
                 $session = Functions::serialize_to_base64($session);

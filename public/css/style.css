@@ -371,7 +371,16 @@ ul ul a {
     width: 250px;
 }
 
+.price{
+    font-size: 25px;
+    font-weight: bold;
+}
 
+.paypal{
+    border: 1px solid rgb(155, 155, 155);
+    padding: 10px;
+    border-radius: 10px;
+}
 
 @media (max-width: 768px){
     .start_end{
@@ -388,6 +397,14 @@ ul ul a {
         max-height: 200px;
         min-width: 200px;
         max-width: 300px;
+    }
+
+    .reservation_info{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1.5rem;
+
     }
 
 }

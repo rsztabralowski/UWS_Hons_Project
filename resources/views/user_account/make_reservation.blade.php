@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Make reservation</div>
 
@@ -20,12 +20,31 @@
                         </div>
                     @endif
 
-                   <p>Room: {{session('room')}}</p>
-                   <p>From: {{date('d/m/Y', strtotime(session('time_from')))}}</p>
-                   <p>To: {{date('d/m/Y', strtotime(session('time_to')))}}</p>
-                   <p>Nights: {{session('nights')}}</p>
-                   <p>Price: &pound;{{session('price')}}</p>
-                   <a href="{{ route('paypal.express-checkout') }}" class='btn-info btn'>PayPal</a>
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Room: {{session('room')}}</h5>
+                          <hr>
+                          <div class="row">
+                                <div class="col-md-6">
+                                    <img class="w-100" src="{{asset('storage/room_photos')}}/{{session('photo')}}" alt="photo">
+                                </div>
+
+                                <div class="col-md-6 reservation_info">
+                                    <h2>{{session('nights')}} {{session('nights') > 1 ? 'Nights' : 'Night'}}</h2>
+                                    <div class="mt-4 mb-3"><i class="fa fa-calendar"></i> &nbsp; <span>{{date('d M Y', strtotime(session('time_from')))}}</span></div>
+                                    <div class="mb-3"><i class="fa fa-calendar"></i> &nbsp; <span>{{date('d M Y', strtotime(session('time_to')))}}</span></div>
+                                    <div class="price">Price: &pound;{{session('price')}}</div>
+                                    <div><small>(Today pay only &pound;{{round (session('price') * 0.2, 2)}} deposit)</small></div>
+                                </div>
+                          </div>
+                          <div class="row mt-4 d-flex justify-content-center m-5">
+                              <a class="paypal" href="{{ route('paypal.express-checkout') }}"><img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_150x38.png" alt="PayPal" /></a>
+                              
+                          </div>
+                        </div>
+                      </div>
+
+                   
                 </div>
             </div>
         </div>

@@ -128,12 +128,12 @@ class PaypalController extends Controller
         // so if paid is false return with error, else return with success message
         if ($payment->paid) 
         {
-            $room = Room::where('room_number', session('room'))->get();
+            $room = Room::where('room_number', session('room'))->first();
 
             $room_id = '';
-            if (isset($room[0]))
+            if (isset($room))
             {
-                $room_id = $room[0]->id;
+                $room_id = $room->id;
             }
     
             $booking = new Booking([
