@@ -121,7 +121,7 @@ class BookingController extends Controller
             $time_from = date('Y-m-d', strtotime( $booking->time_from));
             $time_to = date('Y-m-d', strtotime( $booking->time_to));
             $nights = count(Calendar::date_range($time_from, $time_to)) -1;
-            $price =  round($booking->room->price * $nights, 2);
+            $price =  round($booking->fullprice);
             $deposit = round(($price * 0.2), 2);
 
             if (isset($booking->payment->id))
@@ -148,8 +148,8 @@ class BookingController extends Controller
                 'time_to' => $time_to,
                 'room_number' => $booking->room->room_number,
                 'nights' => $nights,
-                'price' => '&pound;'. $price,
-                'deposit' => '&pound;'. $deposit,
+                'price' => '&pound;'. number_format($price, 2),
+                'deposit' => '&pound;'. number_format($deposit, 2),
                 'status' => $status,
                 'action' => '<a href="bookings/'.$booking->id.'/edit" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-edit"></i></a>'           
             );
@@ -212,6 +212,11 @@ class BookingController extends Controller
 
         $room = Room::where('room_number', $request->input('room_number'))->get();
 
+        $time_from = date('Y-m-d', strtotime( $request->get('time_from')));
+        $time_to = date('Y-m-d', strtotime( $request->get('time_to')));
+        $nights = count(Calendar::date_range($time_from, $time_to)) -1;
+        $fullprice =  round($room->price * $nights, 2);
+
         $room_id = '';
         if (isset($room[0]))
         {
@@ -219,9 +224,10 @@ class BookingController extends Controller
         }
 
         $booking = new Booking([
-            'time_from' => $request->get('time_from'). ' 15:00:00',
-            'time_to' => $request->get('time_to'). ' 12:00:00',
+            'time_from' => $time_from. ' 15:00:00',
+            'time_to' => $time_to. ' 12:00:00',
             'more_info' => $request->get('more_info'),
+            'fullprice' => $fullprice,
             'user_id' => $request->get('user_name'),
             'room_id' => $room_id
         ]);
