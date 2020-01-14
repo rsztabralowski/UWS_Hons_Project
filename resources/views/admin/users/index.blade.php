@@ -27,3 +27,7 @@
         </table>
 </div>
 @endsection
+
+@section('script')
+    <script src="{{ asset('js/users_datatables.js') }}"></script>
+@endsection

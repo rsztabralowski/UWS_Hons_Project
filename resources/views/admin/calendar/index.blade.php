@@ -37,4 +37,8 @@
                 {{-- {!!$output!!} --}}
         </div>
     </div>  
-@endsection    
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/calendar.js') }}"></script>
+@endsection

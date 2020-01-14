@@ -48,3 +48,7 @@
     </div>
 
 @endsection
+
+@section('script')
+    <script src="{{ asset('js/checkRooms.js') }}"></script>
+@endsection

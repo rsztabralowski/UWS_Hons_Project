@@ -25,3 +25,6 @@
 </div>
 @endsection
 
+@section('script')
+    <script src="{{ asset('js/rooms_datatables.js') }}"></script>
+@endsection

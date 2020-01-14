@@ -39,3 +39,6 @@
 </div>
 @endsection
 
+@section('script')
+    <script src="{{ asset('js/bookings_datatables.js') }}"></script>
+@endsection
