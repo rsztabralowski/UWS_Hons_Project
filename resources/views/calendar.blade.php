@@ -8,21 +8,7 @@
             <div class="card">
                 <div class="card-header">Find available rooms</div>
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (Session::has('message'))
-                        <div class="alert alert-{{ Session::get('code') }}">
-                            <p>{{ Session::get('message') }}</p>
-                        </div>
-                    @endif
-                    @if(\Session::has('error'))
-                        <div class="alert alert-danger">
-                            {{\Session::get('error')}}
-                        </div>
-                    @endif
+                   @include('admin.inc.messages')
                     <div class="d-flex justify-content-center">
                         <div class="row mt-4">
                             <div class='col-md-12'>

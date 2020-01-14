@@ -8,17 +8,7 @@
             <div class="card">
                 <div class="card-header">My Bookings</div>
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if(\Session::has('error'))
-                        <div class="alert alert-danger">
-                            {{\Session::get('error')}}
-                        </div>
-                    @endif
-
+                   @include('admin.inc.messages')
                    @if (count($bookings) > 0)
                    <div class="table-responsive">
                         <table class="table table-striped bookings">
