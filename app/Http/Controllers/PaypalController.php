@@ -101,12 +101,17 @@ class PaypalController extends Controller
         // find payment by id
         $payment = Payment::find($payment_id);
 
+        if(empty($payment))
+        {
+            return redirect('/bookings')->with(['code' => 'danger', 'message' => 'Please try again']);
+        }
+
         // if response ACK value is not SUCCESS or SUCCESSWITHWARNING
         // we return back with error
         if (!in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) 
         {
             $payment->delete();
-            return redirect('/')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment']);
+            return redirect('/bookings')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment']);
         }
 
         // get cart data
@@ -148,11 +153,11 @@ class PaypalController extends Controller
     
             $booking->save();
 
-            return redirect('/')->with(['code' => 'success', 'message' => 'Order #' . $payment->id . ' has been paid successfully!']);
+            return redirect('/bookings')->with(['code' => 'success', 'message' => 'Order #' . $payment->id . ' has been paid successfully!']);
         }
         
         $payment->delete();
-        return redirect('/')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment for Order #' . $payment->id . '!']);
+        return redirect('/bookings')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment for Order #' . $payment->id . '!']);
     }
 
     public function cancelled(Request $request) 
@@ -163,14 +168,19 @@ class PaypalController extends Controller
 
         $payment = Payment::find($payment_id);
 
+        if(empty($payment))
+        {
+            return redirect('/bookings')->with(['code' => 'danger', 'message' => 'Please try again']);
+        }
+
         if($payment->payment_status == 'Completed')
         {
-            return redirect('/')->with(['code' => 'success', 'message' => 'Order #' . $payment->id . ' has been paid successfully!']);
+            return redirect('/bookings')->with(['code' => 'success', 'message' => 'Order #' . $payment->id . ' has been paid successfully!']);
         }
         else
         {
             $payment->delete();    
-            return redirect('/')->with(['code' => 'warning', 'message' => 'PayPal payment has been cancelled']);
+            return redirect('/bookings')->with(['code' => 'warning', 'message' => 'PayPal payment has been cancelled']);
         }
         
     }
