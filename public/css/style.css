@@ -411,4 +411,8 @@ ul ul a {
         padding-right: 0;
     }
 
+    .input-group>.custom-select:not(:first-child), .input-group>.form-control:not(:first-child){
+        min-width: 250px;
+    }
+
 }
