@@ -7,11 +7,11 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Find available rooms</div>
-                <div class="card-body">
+                <div class="card-body range">
                    @include('admin.inc.messages')
                     <div class="d-flex justify-content-center">
                         <div class="row mt-4">
-                            <div class='col-md-12'>
+                            <div class='col-md-12 range'>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text"><i class="fa fa-calendar"></i></span>

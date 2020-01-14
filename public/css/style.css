@@ -406,5 +406,9 @@ ul ul a {
         margin-top: 1.5rem;
 
     }
+    .card-body.range, .col-md-12.range{
+        padding-left: 0;
+        padding-right: 0;
+    }
 
 }
