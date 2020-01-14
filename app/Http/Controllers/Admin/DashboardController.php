@@ -20,15 +20,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $today = '';
+        ///////////////////////
+        // BOOKING STARTING AND ENDIG THIS WEEK
+        ///////////////////////
+
+        $today = date('Y-m-d');
         $start_count = 0;
         $end_count = 0;
         $starting = array();
         $ending = array();
         $bookings = array();
-
-        $today = date('Y-m-d');
-
         $next_week = date('Y-m-d', strtotime($today .' + 7 days')) ;
 
         $bookings_starting = Booking::with('room')->whereBetween('time_from', [$today, $next_week])
@@ -84,6 +85,44 @@ class DashboardController extends Controller
         $bookings['count']['starting'] = $start_count;
         $bookings['count']['ending'] = $end_count;
 
-        return view('admin.dashboard.index')->with('bookings', $bookings); 
+        ///////////////////////
+        // MONTHLY INCOME
+        ///////////////////////
+
+        $this_month_bookings = Booking::whereMonth('time_to', '=', date('m'))->with('room')->get();
+        $this_month_bookings_count = $this_month_bookings->count();
+        $this_month_income = 0;
+        foreach($this_month_bookings as $booking)
+        {
+            $time_from = date('Y-m-d', strtotime( $booking->time_from));
+            $time_to = date('Y-m-d', strtotime( $booking->time_to));
+            $nights = count(Calendar::date_range($time_from, $time_to)) -1;
+            $price =  round($booking->fullprice, 2);
+            $this_month_income += $price;
+        }
+
+        ///////////////////////
+        // ANNUAL INCOME
+        ///////////////////////
+
+        $this_year_bookings = Booking::whereYear('time_to', '=', date('Y'))->with('room')->get();
+        $this_year_bookings_count = $this_year_bookings->count();
+        $this_year_income = 0;
+        foreach($this_year_bookings as $booking)
+        {
+            $time_from = date('Y-m-d', strtotime( $booking->time_from));
+            $time_to = date('Y-m-d', strtotime( $booking->time_to));
+            $nights = count(Calendar::date_range($time_from, $time_to)) -1;
+            $price =  round($booking->fullprice, 2);
+            $this_year_income += $price;
+        }
+
+
+        return view('admin.dashboard.index')->with('bookings', $bookings)
+                                            ->with('this_month_income', $this_month_income)
+                                            ->with('this_year_income', $this_year_income)
+                                            ->with('this_month_bookings_count', $this_month_bookings_count)
+                                            ->with('this_year_bookings_count', $this_year_bookings_count);
+
     }
 }
