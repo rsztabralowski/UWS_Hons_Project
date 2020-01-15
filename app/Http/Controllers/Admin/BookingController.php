@@ -121,7 +121,7 @@ class BookingController extends Controller
             $time_from = date('Y-m-d', strtotime( $booking->time_from));
             $time_to = date('Y-m-d', strtotime( $booking->time_to));
             $nights = count(Calendar::date_range($time_from, $time_to)) -1;
-            $price =  round($booking->fullprice);
+            $price =  round($booking->fullprice, 2);
             $deposit = round(($price * 0.2), 2);
 
             if (isset($booking->payment->id))
