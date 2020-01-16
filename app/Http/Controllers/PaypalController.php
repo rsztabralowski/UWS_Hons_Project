@@ -23,9 +23,24 @@ class PaypalController extends Controller
 
     public function expressCheckout(Request $request) 
     {
-        
+        //Check if selected room still available
+        $room = Room::where('room_number', session('room'))->first();
+        $bookings = Booking::where('room_id', $room['id'])->get();
+
+        foreach ($bookings as $booking)
+        {
+            $s1 = strtotime(session('time_from'));
+            $e1 = strtotime(session('time_to'));
+            $s2 = strtotime($booking->time_from);
+            $e2 = strtotime($booking->time_to);
+
+            if(!Functions::testRange($s1, $e1, $s2, $e2))
+            {
+                return redirect('/')->with(['code' => 'danger', 'message' => 'Sorry, looks like someone else just booked this room before you...']);
+            }
+        }
+
         // get new payment id
-        
         $payment_id = Functions::getRandomNumber(9);
             
         // Get the cart data
@@ -116,6 +131,25 @@ class PaypalController extends Controller
 
         // get cart data
         $cart = $this->getCart($payment_id);
+
+        //Check if selected room still available
+        $room = Room::where('room_number', session('room'))->first();
+        $bookings = Booking::where('room_id', $room['id'])->get();
+
+        foreach ($bookings as $booking)
+        {
+            $s1 = strtotime(session('time_from'));
+            $e1 = strtotime(session('time_to'));
+            $s2 = strtotime($booking->time_from);
+            $e2 = strtotime($booking->time_to);
+
+            if(!Functions::testRange($s1, $e1, $s2, $e2))
+            {
+                $payment->delete();
+                return redirect('/')->with(['code'    => 'danger', 
+                                            'message' => 'Sorry, looks like someone else just booked this room before you...']);
+            }
+        }
 
         // perform transaction on PayPal
         // and get the payment status

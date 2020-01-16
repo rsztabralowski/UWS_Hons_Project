@@ -7,6 +7,7 @@ use App\Booking;
 use App\Room;
 use App\User;
 use App\Payment;
+use App\CustomClass\Functions;
 use App\CustomClass\Calendar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -39,12 +40,6 @@ class BookingController extends Controller
      */
     public function checkavail(Request $request)
     {
-
-        function testRange($s1,$e1,$s2,$e2)
-        {
-            return ($e1 < $s2 || $s1 > $e2);
-        }
-        
         $room_available = array();
         $rooms = Room::all('id', 'room_number');
         $output = '';
@@ -64,7 +59,7 @@ class BookingController extends Controller
                 $s2 = strtotime($booking->time_from);
                 $e2 = strtotime($booking->time_to);
 
-                if(!testRange($s1, $e1, $s2, $e2) && $booking->id != $request->booking_id)
+                if(!Functions::testRange($s1, $e1, $s2, $e2) && $booking->id != $request->booking_id)
                 {
                     $room_available[$room->room_number] = 'Room not available';
                     break;
