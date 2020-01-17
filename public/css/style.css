@@ -147,8 +147,12 @@ ul ul a {
 }
 
 .edit {
-    font-size: 10px;
+    font-size: 11px;
 }
+
+.edit:active {
+    outline:none !important;
+ }
 
 .booking_info{
     display: flex;
@@ -189,6 +193,15 @@ ul ul a {
    padding: 10px;
    justify-content: space-around;
 }
+
+.buttons-bookings{
+    display: flex;
+    justify-content: space-around;
+ }
+
+ .buttons-bookings>a{
+    margin: 2px;
+ }
 
 .message{
    margin: 20px;

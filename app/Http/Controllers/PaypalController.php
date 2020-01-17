@@ -179,7 +179,7 @@ class PaypalController extends Controller
                 'time_from' => session('time_from'). ' 15:00:00',
                 'time_to' => session('time_to'). ' 12:00:00',
                 'more_info' => session('more_info'),
-                'fullprice' => session('price'),
+                'fullprice' => round(session('price'), 2),
                 'user_id' => Auth::id(),
                 'room_id' => $room_id,
                 'payment_id' => $payment_id

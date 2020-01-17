@@ -53,6 +53,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('rooms/checkavail', 'Admin\BookingController@checkavail')->name('rooms.checkavail');
     Route::get('calendar/getallbookings', 'Admin\CalendarController@getallbookings')->name('calendar.getallbookings');
     Route::get('dashboard', 'Admin\DashboardController@index');
+    Route::get('invoice/{booking}', 'Admin\BookingController@get_pdf')->name('pdf');
     Route::resource('bookings', 'Admin\BookingController');
     Route::resource('rooms', 'Admin\RoomController');
     Route::resource('users', 'Admin\UserController');

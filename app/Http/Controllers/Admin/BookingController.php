@@ -125,6 +125,8 @@ class BookingController extends Controller
                     $status = '<button class="btn btn-sm" style="background-color: lightgreen">'. $booking->payment->payment_status .'</button>';
                 elseif ($booking->payment->payment_status == 'Pending')
                     $status = '<button class="btn btn-sm" style="background-color: orange">'. $booking->payment->payment_status .'</button>';
+                elseif ($booking->payment->payment_status == 'Modified')
+                    $status = '<button class="btn btn-sm" style="background-color: orange">'. $booking->payment->payment_status .'</button>';
                 elseif ($booking->payment->payment_status == 'Not Paid')
                     $status = '<button class="btn btn-sm" style="background-color: #ff7f7f">'. $booking->payment->payment_status .'</button>';
                 else
@@ -146,7 +148,10 @@ class BookingController extends Controller
                 'price' => '&pound;'. number_format($price, 2),
                 'deposit' => '&pound;'. number_format($deposit, 2),
                 'status' => $status,
-                'action' => '<a href="bookings/'.$booking->id.'/edit" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-edit"></i></a>'           
+                'action' => '<div class="buttons-bookings">
+                                <a href="bookings/'.$booking->id.'/edit" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-edit"></i></a>
+                                <a href="invoice/'.$booking->id.'" class="btn btn-danger edit" id="'.$booking->id.'"><i class="fas fa-file-pdf"></i> PDF</a>
+                             </div>'           
             );
         }
 
@@ -205,7 +210,7 @@ class BookingController extends Controller
             'room_number' => ['required', new CheckRoomNumber ]
         ]);
 
-        $room = Room::where('room_number', $request->input('room_number'))->get();
+        $room = Room::where('room_number', $request->input('room_number'))->first();
 
         $time_from = date('Y-m-d', strtotime( $request->get('time_from')));
         $time_to = date('Y-m-d', strtotime( $request->get('time_to')));
@@ -213,9 +218,9 @@ class BookingController extends Controller
         $fullprice =  round($room->price * $nights, 2);
 
         $room_id = '';
-        if (isset($room[0]))
+        if (isset($room))
         {
-            $room_id = $room[0]->id;
+            $room_id = $room->id;
         }
 
         $booking = new Booking([
@@ -301,6 +306,18 @@ class BookingController extends Controller
         $update_booking->time_to = $request->input('time_to'). ' 12:00:00';
         $update_booking->more_info = $request->input('more_info');
 
+        $room = Room::where('room_number', $request->input('room_number'))->first();
+        
+        if(isset($room))
+        {
+            $update_booking->room_id = $room->id;
+            $room_price = $room->price;
+        }
+        else
+        {
+            $room_price = $booking->room->price;
+        }
+
         if($request->input('status') != 'null' && Payment::find($booking->payment_id) != null)
         {
             $payment = Payment::find($booking->payment_id);
@@ -308,11 +325,20 @@ class BookingController extends Controller
             $payment->save();
         }
 
-        $room = Room::where('room_number', $request->input('room_number'))->get();
-
-        if (isset($room[0]))
+        if(Payment::find($booking->payment_id) != null && $request->input('status') == 'null')
         {
-            $update_booking->room_id = $room[0]->id;
+            $time_from = date('Y-m-d', strtotime( $update_booking->time_from ));
+            $time_to = date('Y-m-d', strtotime( $update_booking->time_to));
+            $nights = count(Calendar::date_range($time_from, $time_to)) -1;
+            $current_price =  round($room_price * $nights, 2);
+
+            $payment = Payment::find($booking->payment_id);
+
+            if($current_price != $booking->fullprice)
+            {
+                $payment->payment_status = "Modified";
+            }
+            $payment->save();
         }
 
         $update_booking->save();
@@ -332,5 +358,29 @@ class BookingController extends Controller
         $booking->delete();
 
         return redirect('/admin/bookings')->with('success', 'Booking Removed');
+    }
+
+    public function get_pdf(Booking $booking, $type = 'stream')
+    {
+        $data = $booking;
+
+        $time_from = date('Y-m-d', strtotime( $booking->time_from ));
+        $time_to = date('Y-m-d', strtotime( $booking->time_to));
+        $nights = count(Calendar::date_range($time_from, $time_to)) -1;
+        $current_price =  round($booking->room->price * $nights, 2);
+
+        $pdf = app('dompdf.wrapper')->loadView('admin.bookings.invoice', ['booking' => $data, 
+                                                                          'current_price' => $current_price,
+                                                                          'nights' => $nights]);
+
+        $file_name = 'Booking_#' .$booking->id. '_Invoice';
+
+        if ($type == 'stream') {
+            return $pdf->stream($file_name .'.pdf');
+        }
+
+        if ($type == 'download') {
+            return $pdf->download($file_name .'.pdf');
+        }
     }
 }
