@@ -18,6 +18,7 @@
                                 <th>Time to</th>                           
                                 <th>Room number</th>
                                 <th>Nights</th>
+                                <th>Price</th>
                                 <th>Deposit</th>
                                 <th>Status</th>
                             </tr>
@@ -33,6 +34,7 @@
                                     $nights = count($booking_days) -1;
                                 @endphp 
                                 <td>{{$nights}}</td> 
+                                <td>&pound;{{$booking->fullprice}}</td> 
                                 @if (isset($booking->payment->id))
                                     <td>&pound;{{$booking->payment->price}}</td>
                                     @if ($booking->payment->payment_status == 'Completed')
@@ -43,7 +45,7 @@
                                         <td>{{$booking->payment->payment_status}}</td>     
                                     @endif
                                 @else
-                                    <td></td>
+                                    <td>n/a</td>
                                     <td><button class="btn btn-sm" style="background-color: #ff7f7f">Not Paid</button></td>
                                 @endif    
                             </tr>                      

@@ -117,7 +117,14 @@ class BookingController extends Controller
             $time_to = date('Y-m-d', strtotime( $booking->time_to));
             $nights = count(Calendar::date_range($time_from, $time_to)) -1;
             $price =  round($booking->fullprice, 2);
-            $deposit = round(($price * 0.2), 2);
+            if(isset($booking->payment->price))
+            {
+                $deposit = '&pound;'. round($booking->payment->price, 2);
+            }
+            else
+            {
+                $deposit = 'n/a';
+            }
 
             if (isset($booking->payment->id))
             {
@@ -146,7 +153,7 @@ class BookingController extends Controller
                 'room_number' => $booking->room->room_number,
                 'nights' => $nights,
                 'price' => '&pound;'. number_format($price, 2),
-                'deposit' => '&pound;'. number_format($deposit, 2),
+                'deposit' => $deposit,
                 'status' => $status,
                 'action' => '<div class="buttons-bookings">
                                 <a href="bookings/'.$booking->id.'/edit" class="btn btn-primary edit" id="'.$booking->id.'"><i class="fas fa-edit"></i></a>
@@ -325,21 +332,12 @@ class BookingController extends Controller
             $payment->save();
         }
 
-        if(Payment::find($booking->payment_id) != null && $request->input('status') == 'null')
-        {
-            $time_from = date('Y-m-d', strtotime( $update_booking->time_from ));
-            $time_to = date('Y-m-d', strtotime( $update_booking->time_to));
-            $nights = count(Calendar::date_range($time_from, $time_to)) -1;
-            $current_price =  round($room_price * $nights, 2);
-
-            $payment = Payment::find($booking->payment_id);
-
-            if($current_price != $booking->fullprice)
-            {
-                $payment->payment_status = "Modified";
-            }
-            $payment->save();
-        }
+        $time_from = date('Y-m-d', strtotime( $update_booking->time_from ));
+        $time_to = date('Y-m-d', strtotime( $update_booking->time_to));
+        $nights = count(Calendar::date_range($time_from, $time_to)) -1;
+        $current_price =  round($room_price * $nights, 2);
+        
+        $update_booking->fullprice = $current_price;
 
         $update_booking->save();
         $user->save();
