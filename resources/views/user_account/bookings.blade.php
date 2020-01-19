@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">My Bookings</div>
                 <div class="card-body">
@@ -20,6 +20,7 @@
                                 <th>Nights</th>
                                 <th>Price</th>
                                 <th>Deposit</th>
+                                <th>To pay</th>
                                 <th>Status</th>
                             </tr>
                             @foreach ($bookings as $booking)
@@ -37,6 +38,7 @@
                                 <td>&pound;{{$booking->fullprice}}</td> 
                                 @if (isset($booking->payment->id))
                                     <td>&pound;{{$booking->payment->price}}</td>
+                                    <td>&pound;{{$booking->fullprice - $booking->payment->price}}</td>
                                     @if ($booking->payment->payment_status == 'Completed')
                                         <td><button class="btn btn-sm" style="background-color: lightgreen">{{$booking->payment->payment_status}}</button></td>    
                                     @elseif ($booking->payment->payment_status == 'Pending')
@@ -46,8 +48,9 @@
                                     @endif
                                 @else
                                     <td>n/a</td>
+                                    <td>&pound;{{$booking->fullprice}}</td>
                                     <td><button class="btn btn-sm" style="background-color: #ff7f7f">Not Paid</button></td>
-                                @endif    
+                                @endif 
                             </tr>                      
                             @endforeach
                         </table>

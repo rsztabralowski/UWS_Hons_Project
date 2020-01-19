@@ -146,7 +146,7 @@
                 <tr>
                     <td>Room {{$booking->room->room_number}}</td>
                     <td align="center">{{date('d M Y', strtotime($booking->time_from))}} - {{date('d M Y', strtotime($booking->time_to))}}</td>
-                    <td align="center">&pound;{{$booking->room->price}}</td>
+                    <td align="center">&pound;{{$booking->fullprice / $nights}}</td>
                     <td>{{$nights}}</td>
                     <td align="left">&pound;{{$booking->fullprice}}</td>
                 </tr>
