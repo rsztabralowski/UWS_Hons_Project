@@ -9,6 +9,8 @@ use App\Room;
 use App\CustomClass\Functions;
 use Auth;
 use Srmklive\PayPal\Services\ExpressCheckout;
+use Mail;
+use App\Mail\ConfirmBooking;
 
 
 
@@ -186,6 +188,8 @@ class PaypalController extends Controller
             ]);
     
             $booking->save();
+
+            Mail::to(Auth::user()->email)->send(new ConfirmBooking($booking->id));
 
             return redirect('/bookings')->with(['code' => 'success', 'message' => 'Order #' . $payment->id . ' has been paid successfully!']);
         }
