@@ -55,11 +55,11 @@ class UserCalendarController extends Controller
         {
             if(is_object($room_array))
             {
-                $photos = Photo::where('room_id', $room_array->id)->get();
-
-                if($photos->isEmpty())
+                $photos = Photo::where('room_id', $room_array->id)->get()->toArray();
+                
+                if(count($photos) < 1)
                 {
-                    $photos[] = (object) array('url' => 'no_photo.png');
+                    $photos[] = array('url' => 'no_photo.png');
                 }
 
                 $booking_days = Calendar::date_range($request->time_from, $request->time_to);
@@ -107,7 +107,7 @@ class UserCalendarController extends Controller
                 $photo_count = 0;
                                 foreach($photos as $photo)
                                 {
-                                    $url = asset('storage/room_photos/'. $photo->url);
+                                    $url = asset('storage/room_photos/'. $photo['url']);
 
                                     if($photo_count == 0)
                                     {
