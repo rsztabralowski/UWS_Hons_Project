@@ -4,7 +4,7 @@
 <br><br>
 <div class="container">
     <div align='right'>
-    <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('rooms.create')}}"><i class="fas fa-plus-circle"></i> Add New Room</a></button>
+    <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('rooms.create')}}"><i class="fas fa-plus-circle"></i> {{ __('Add New Room') }}</a></button>
     </div>
     <div class="datatables_buttons">
         <button id="btn-show-all-children" class="btn btn-sm btn-dark" type="button">Expand All</button>

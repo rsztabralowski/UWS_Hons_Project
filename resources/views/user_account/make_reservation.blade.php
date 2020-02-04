@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Make reservation</div>
+                <div class="card-header">{{ __('Make reservation') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -22,7 +22,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                          <h5 class="card-title">Room: {{session('room')}}</h5>
+                          <h5 class="card-title">{{ __('Room') }}: {{session('room')}}</h5>
                           <hr>
                           <div class="row">
                                 <div class="col-md-6">
@@ -30,11 +30,11 @@
                                 </div>
 
                                 <div class="col-md-6 reservation_info">
-                                    <h2>{{session('nights')}} {{session('nights') > 1 ? 'Nights' : 'Night'}}</h2>
+                                    <h2>{{session('nights')}} {{session('nights') > 1 ? ''. __('Nights') .'' : ''. __('Night') .''}}</h2>
                                     <div class="mt-4 mb-3"><i class="fa fa-calendar"></i> &nbsp; <span>{{date('d M Y', strtotime(session('time_from')))}}</span></div>
                                     <div class="mb-3"><i class="fa fa-calendar"></i> &nbsp; <span>{{date('d M Y', strtotime(session('time_to')))}}</span></div>
-                                    <div class="price">Price: &pound;{{session('price')}}</div>
-                                    <div><small>(Today pay only &pound;{{round (session('price') * 0.2, 2)}} deposit)</small></div>
+                                    <div class="price">{{ __('Price') }}: &pound;{{session('price')}}</div>
+                                    <div><small>({{ __('Today pay only') }} &pound;{{round (session('price') * 0.2, 2)}} {{ __('deposit') }})</small></div>
                                 </div>
                           </div>
                           <div class="row mt-4 d-flex justify-content-center m-5">

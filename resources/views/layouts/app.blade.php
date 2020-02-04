@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -42,43 +43,67 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        <li class="nav-item space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('Language') }} <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ url('/lang/en') }}">
+                                    EN
+                                </a> 
+                                <a class="dropdown-item" href="{{ url('/lang/pl') }}">
+                                    PL
+                                </a> 
+                            </div>
+                        </li>
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @php
-                                    if(auth()->user()->isAdmin == 1)
-                                   
-                                        echo '<a class="dropdown-item" href='. url('admin/dashboard') .'>Admin Panel</a>';
-                                   
-                                    @endphp
+                                    @if (auth()->user()->isAdmin == 1)
+                                        <a class="dropdown-item" href="{{url('admin/dashboard')}}">{{ __('Admin Panel') }}</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ url('/') }}">
-                                        Make reservation
+                                        {{ __('Make reservation') }}
                                     </a> 
                                     <a class="dropdown-item" href="{{ route('user.bookings') }}">
-                                        Bookings
+                                        {{ __('Bookings') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('user.account') }}">
-                                        Account
+                                        {{ __('Account') }}
                                     </a>
+                                   
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Language') }} <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ url('/lang/en') }}">
+                                        EN
+                                    </a> 
+                                    <a class="dropdown-item" href="{{ url('/lang/pl') }}">
+                                        PL
+                                    </a> 
                                 </div>
                             </li>
                         @endguest

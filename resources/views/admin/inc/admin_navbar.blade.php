@@ -11,11 +11,11 @@
             </nav>
         </div>
         <span class="navbar-brand">
-            {{ (request()->is('admin/dashboard*')) ? 'Dashboard' : '' }}
-            {{ (request()->is('admin/bookings*')) ? 'Bookings' : '' }}
-            {{ (request()->is('admin/users*')) ? 'Users' : '' }}
-            {{ (request()->is('admin/rooms*')) ? 'Rooms' : '' }}
-            {{ (request()->is('admin/calendar*')) ? 'Calendar' : '' }}
+            {{ (request()->is('admin/dashboard*')) ? ''. __('Dashboard') .'' : '' }}
+            {{ (request()->is('admin/bookings*')) ? ''. __('Bookings') .'' : '' }}
+            {{ (request()->is('admin/users*')) ? ''. __('Users') .'' : '' }}
+            {{ (request()->is('admin/rooms*')) ? ''. __('Rooms') .'' : '' }}
+            {{ (request()->is('admin/calendar*')) ? ''. __('Calendar') .'' : '' }}
         </span>
         <div class="container"></div>
     </div>

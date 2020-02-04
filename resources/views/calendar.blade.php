@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Find available rooms</div>
+                <div class="card-header">{{ __('Find available rooms') }}</div>
                 <div class="card-body range">
                    @include('admin.inc.messages')
                     <div class="d-flex justify-content-center">
@@ -16,7 +16,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                     </div>
-                                    <input type='text' class="form-control" placeholder="Please select dates" name="daterange" id='daterange'/>
+                                    <input type='text' class="form-control" placeholder="{{ __('Please select dates') }}" name="daterange" id='daterange'/>
                                 </div>
                             </div>
                             <input readonly type="hidden" name="time_from" id="time_from" value="" />
@@ -25,7 +25,7 @@
                     </div>
                     <br>
                     <div class="d-flex justify-content-center">
-                        <button id="search">Search</button>
+                    <button id="search">{{ __('Search') }}</button>
                     </div>
                 </div>
             </div>

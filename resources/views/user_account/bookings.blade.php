@@ -6,28 +6,28 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">My Bookings</div>
+                <div class="card-header">{{ __('My Bookings') }}</div>
                 <div class="card-body">
                    @include('admin.inc.messages')
                    @if (count($bookings) > 0)
                    <div class="table-responsive">
                         <table class="table table-striped bookings">
                             <tr>
-                                <th>Booking ID</th>                           
-                                <th>Time from</th>                           
-                                <th>Time to</th>                           
-                                <th>Room number</th>
-                                <th>Nights</th>
-                                <th>Price</th>
-                                <th>Deposit</th>
-                                <th>To pay</th>
-                                <th>Status</th>
+                                <th>{{ __('ID') }}</th>                           
+                                <th>{{ __('Time from') }}</th>                           
+                                <th>{{ __('Time to') }}</th>                           
+                                <th>{{ __('Room number') }}</th>
+                                <th>{{ __('Nights') }}</th>
+                                <th>{{ __('Price') }}</th>
+                                <th>{{ __('Deposit') }}</th>
+                                <th>{{ __('To pay') }}</th>
+                                <th>{{ __('Status') }}</th>
                             </tr>
                             @foreach ($bookings as $booking)
                             <tr>
                                 <td>#{{$booking->id}}</td>                           
-                                <td>{{$booking->time_from}}</td>                           
-                                <td>{{$booking->time_to}}</td>                           
+                                <td>{{date('d M Y', strtotime($booking->time_from))}}</td>                           
+                                <td>{{date('d M Y', strtotime($booking->time_to))}}</td>                           
                                 <td>{{$booking->room->room_number}}</td>
                                 @php
                                     $booking_days = App\CustomClass\Calendar::

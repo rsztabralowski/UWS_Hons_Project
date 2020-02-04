@@ -4,7 +4,7 @@
 <br><br>
 <div class="container">
     <div align='right'>
-    <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('bookings.create')}}"><i class="fas fa-plus-circle"></i> Add New Booking</a></button>
+    <button type="button" name="add" id="add_data" class="btn btn-success btn-sm"><a href="{{route('bookings.create')}}"><i class="fas fa-plus-circle"></i> {{ __('Add New Booking') }}</a></button>
     </div>
     <p>
         <ul class="list-inline">
@@ -22,17 +22,17 @@
         <table id="bookings_table" class="display responsive" style="width:100%">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Time From</th>
-                    <th>Time To</th>
-                    <th>Room</th>
-                    <th>Nights</th>
-                    <th>Price</th>
-                    <th>Deposit</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th>{{ __('ID') }}</th>
+                    <th>{{ __('Username') }}</th>
+                    <th>{{ __('Email') }}</th>
+                    <th>{{ __('Time from') }}</th>
+                    <th>{{ __('Time to') }}</th>
+                    <th>{{ __('Room') }}</th>
+                    <th>{{ __('Nights') }}</th>
+                    <th>{{ __('Price') }}</th>
+                    <th>{{ __('Deposit') }}</th>
+                    <th>{{ __('Status') }}</th>
+                    <th>{{ __('Action') }}</th>
                 </tr>
             </thead>
         </table>
