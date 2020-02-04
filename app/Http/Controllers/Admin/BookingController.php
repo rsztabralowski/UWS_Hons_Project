@@ -241,7 +241,7 @@ class BookingController extends Controller
 
         $booking->save();
         
-        return redirect('/admin/bookings')->with('success', 'Booking Created');
+        return redirect('/admin/bookings')->with('success', ''. __('Booking Created') .'');
     }
 
     /**

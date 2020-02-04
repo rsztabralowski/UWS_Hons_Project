@@ -395,7 +395,16 @@ ul ul a {
     border-radius: 10px;
 }
 
+.languages-admin{
+    display: flex;
+}
+
 @media (max-width: 768px){
+
+    .space{
+        display: none;
+    }
+    
     .start_end{
         display: block;
     }

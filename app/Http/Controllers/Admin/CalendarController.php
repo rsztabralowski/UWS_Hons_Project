@@ -97,7 +97,7 @@ class CalendarController extends Controller
         foreach($rooms as $room)
         {
             $output .= '<div class="title">';
-            $output .= 'Room '. $room->room_number;
+            $output .= ''. __('Room') .' '. $room->room_number;
             $output .= '</div>';
 
             $output .= '<div class="dayweekcontainer">';

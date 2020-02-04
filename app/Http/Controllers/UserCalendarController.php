@@ -81,7 +81,7 @@ class UserCalendarController extends Controller
                 $html .= '
                     <div class="col-md-8 mt-4">
                         <div class="card">
-                            <div class="card-header">Room '. $room_array->room_number .'</div>
+                            <div class="card-header">'. __("Room") .' '. $room_array->room_number .'</div>
                             <div class="card-body">
                                 <div class="photos">';
                 $html .= '
@@ -141,14 +141,14 @@ class UserCalendarController extends Controller
                 $html .= '
                             </div>
                                 <div class="d-flex justify-content-center">
-                                    <div class="m-4"><span class="main-price">&pound;'. $room_array->price .'</span> / <small>night</small></div>
+                                    <div class="m-4"><span class="main-price">&pound;'. $room_array->price .'</span> / <small>'. __("night") .'</small></div>
                                 </div>
 
                                 <div class="d-flex justify-content-center">
                                     <a href="'. route("make.reservation") .'">
                                         <button class="btn btn-primary session"
                                                 data-booking = "'. $session .'"
-                                            >Make reservation
+                                            >'. __("Make reservation") .'
                                         </button>
                                     </a>
                                 </div>
